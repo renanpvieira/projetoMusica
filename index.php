@@ -1,5 +1,5 @@
 <?php
-/**
+/** teste 2
  * CodeIgniter
  *
  * An open source application development framework for PHP
