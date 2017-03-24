@@ -6,4 +6,5 @@
    <!-- <a href="#">Enviar</a> -->
    <input type="button" value="Enviar" name="Enviar">
 </form>
+<a href="<?php echo site_url('esquecisenha');?>">esqueci a senha</a>
 <div id="login"></div>

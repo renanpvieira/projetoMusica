@@ -16,15 +16,15 @@ class Login extends MY_Controller {
     }
       
 
-	public function index()
-	{
+    public function index()
+    {
         $this->displaySite('login');
-	}
+    }
 
     public function logar()
 	{
         $post = $this->input->post();
-        $this->form_validation->set_rules('Login', 'Login', 'trim|required|min_length[6]|max_length[12]');
+        $this->form_validation->set_rules('Login', 'Login', 'trim|required|min_length[6]|max_length[255]|valid_email');
         $this->form_validation->set_rules('Senha', 'Senha', 'trim|required|min_length[6]|max_length[12]');
 
         if ($this->form_validation->run())
