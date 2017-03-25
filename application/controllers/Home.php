@@ -14,21 +14,18 @@ class Home extends MY_Controller {
                   
          $scripts = Array('home.js');
          $this->SetScript($scripts);
-         
     }
 
-   
-
-	public function index()
-	{
+    public function index()
+    {
         $this->SetDados('ufs', $this->uf->lstUFs());
         $this->SetDados('estilos', $this->estilo->lstEstilos());
         $this->SetDados('bandas', $this->banda->lstBandas());
         $this->displaySite('home');
-	}
+    }
 
     public function getJsonCidades()
-	{
+    {
          $c = $this->input->get();
          echo  json_encode($c);
     }

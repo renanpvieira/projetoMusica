@@ -1,31 +1,79 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
+<!-- saved from url=(0061)https://blackrockdigital.github.io/startbootstrap-freelancer/ -->
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Toca pra mim</title>
-    <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
-    <script  src="<?php echo base_url('content/js/script.js'); ?>"  ></script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-	<style type="text/css">
+    <title>Toca pra mim</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo base_url('content/css/bootstrap.min.css'); ?>" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="<?php echo base_url('content/css/freelancer.min.css'); ?>" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="<?php echo base_url('content/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
+     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     
-	</style>
-
-    <script>
- 
-        function GeraSecurityForm(form){
-             form[form.length] = { name: "<?php echo $this->security->get_csrf_token_name() ;?>", value: getCookie("<?php echo $this->security->get_csrf_cookie_name() ;?>") };
-             return form;
-         }
-
-         function Site_Url(url){  return '<?php echo site_url(); ?>' + url; }
-
-
-       
-    </script>
+    <style>
+        
+        header { 
+           /* background-image: url("../..//..//content/css/imgs/01.jpg") no-repeat !important; */
+           
+           background-image: url("<?php echo base_url('content/css/imgs/02.jpg'); ?>") !important;
+        }
+    </style>
 
 </head>
-<body>
-<a href="<?php echo site_url('login'); ?>">Login</a>
-<a href="<?php echo site_url('cadastro'); ?>">Cadastro</a>
-<br />
+
+<body id="page-top" class="index">
+    <div id="skipnav">
+        <a href="https://blackrockdigital.github.io/startbootstrap-freelancer/#maincontent">Skip to main content</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="<?php echo site_url('home'); ?>">TOCA PRA MIM</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden active">
+                        <a href="https://blackrockdigital.github.io/startbootstrap-freelancer/#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="<?php echo site_url('login'); ?>">Login</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="<?php echo site_url('cadastro'); ?>">Cadastre-se</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="https://blackrockdigital.github.io/startbootstrap-freelancer/#contact">Contato</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
