@@ -8,7 +8,6 @@ class Cadastro extends MY_Controller {
         parent::__construct();
         $this->load->helper('form');
 
-        $this->load->model('Banda_model', 'banda');
         $this->load->model('Usuario_model', 'usuario');
         $this->load->model('Cliente_model', 'cliente');
     }
@@ -21,6 +20,8 @@ class Cadastro extends MY_Controller {
 
     public function cadastroBanda()
     {
+      $this->load->model('Banda_model', 'banda');
+        
       $scripts = Array('cadastroBanda.js');
       $this->SetScript($scripts);
 		
@@ -30,9 +31,10 @@ class Cadastro extends MY_Controller {
     
     public function cadastrarBanda()
     {
+		
         $post = $this->input->post();
 
-        $this->form_validation->set_rules('Login', 'Login', 'trim|required|min_length[6]|max_length[255]|valid_email');
+        $this->form_validation->set_rules('Login', 'Login','trim|required|min_length[6]|max_length[255]|valid_email');
         $this->form_validation->set_rules('Senha', 'Senha', 'trim|required|min_length[6]|max_length[12]|alpha_numeric');
         $this->form_validation->set_rules('SenhaRepete', 'Repita a senha', 'trim|required|min_length[6]|max_length[12]|alpha_numeric');
         $this->form_validation->set_rules('Nome', 'Nome da banda', 'trim|required|min_length[1]|max_length[50]');
@@ -48,14 +50,13 @@ class Cadastro extends MY_Controller {
 
             if($this->form_validation->run())
             {
-
-                $res = $this->usuario->VerificaUsuario($post['Login']); // antes de cadastra verifica se o usuario ja existe
+                $res = $this->usuario->VerificaUsuario($post['Login']); 
                 if(count($res) == 0)
                 {
                     if($post['Senha'] == $post['SenhaRepete'])
                     {
                         unset($dados);
-                        $dados['Login'] = $post['Login']; 
+                        $dados['Login'] = $post['Login'];
                         $dados['Senha'] = $this->encryption->encrypt($post['Senha']);
 
                         $res = $this->usuarios->insereUsuario($dados);
@@ -64,31 +65,44 @@ class Cadastro extends MY_Controller {
                         {
                             unset($dados);
                             $dados['UsuarioId'] = $res;
-                            $dados['Nome'];
-                            $dados['NumIntegrantes'];
-                            $dados['Preco'];
-                            $dados['Sobre'];
-                            $dados['Experiencia'];
-                            $dados['Facebook'];
-                            $dados['Skype'];
-                            $dados['YoutubeCanal'];
+                            $dados['Nome'] = $post['Nome'];
+                            $dados['NumIntegrantes'] = $post['NumIntegrantes'];
+                            $dados['Preco'] = $post['Preco'];
+                            $dados['Sobre'] = $post['Sobre'];
+                            $dados['Experiencia'] = $post['Experiencia'];
+                            $dados['Facebook'] = $post['Facebook'];
+                            $dados['Skype'] = $post['Skype'];
+                            $dados['YoutubeCanal'] = $post['YoutubeCanal'];
+							
+                            $res_banda = $this->banda->insereBanda($dados);
 
+                            if($res_banda!=0)
+                            {
+                                unset($res_banda);
+                                $res = $this->usuario->VerificaUsuario($post['Login']);
+                                $this->session->set_userdata('musica_proj', $this->encryption->	encrypt(json_encode($res[0])));
+
+                            }else{
+                                $this->usuario->deletaUsuario($res); 
+                                $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>"); 
+                                                                 }
+							
+                        }else{ //InsereUsuario
+                           $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>"); 
                         }
-                }
-                }
+						
+                 }else{ //Senhas iguais
+	                $this->postResult(FALSE, "<p>Voce precisa digitar senhas iguais!</p>"); 
+				 }
+				 
+              }else{ //VerificaUsuario
+                $this->postResult(FALSE, "<p>Usuario ja esta cadastrado!</p>");
+			  }
 
-            }else{
+            }else{ //Form_Validation
                 $this->postResult(FALSE, validation_errors());
             }       
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -116,14 +130,17 @@ class Cadastro extends MY_Controller {
         if ($this->form_validation->run())
         {
             $res = $this->usuario->VerificaUsuario($post['Login']);
-            if(count($res) == 0){
-                if($post['Senha'] == $post['SenhaRepete']){
+            if(count($res) == 0)
+			{
+                if($post['Senha'] == $post['SenhaRepete'])
+				{
 
                      unset($dados);
                      $dados['Login'] = $post['Login'];
                      $dados['Senha'] = $this->encryption->encrypt($post['Senha']);
                      $res = $this->usuario->insereUsuario($dados);     
-                     if($res != 0){
+                     if($res != 0)
+					 {
 
                         unset($dados); // Limpando o array de dados !impostatnte
                         $dados['UsuarioId'] = $res;
