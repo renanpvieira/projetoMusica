@@ -74,11 +74,11 @@
                 <?php 
                    foreach($bandas as $v){
                      echo   '<div class="col-sm-4 portfolio-item">
-                                <a href="' . site_url('usuario/banda/' . $v['BandaId']) . '" class="portfolio-link" data-toggle="modal">
+                                <a href="' . site_url('banda/index/' . $v['BandaId']) . '" class="portfolio-link" data-toggle="modal">
                                     <div class="caption">
                                         <div class="caption-content">
                                             <p>' . $v['Nome'] . '</p>
-                                            <p>' . $v['estilos'] . '</p>
+                                            <p>' . $v['Estilos'] . '</p>
                                         </div>
                                     </div>
                                     <img src="' . base_url('content/imgs/' . $v['foto']) . '" class="img-responsive" alt="Cabin">

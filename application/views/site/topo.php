@@ -35,11 +35,21 @@
            /* background-image: url("../..//..//content/css/imgs/01.jpg") no-repeat !important; */
            
            background-image: url("<?php echo base_url('content/css/imgs/02.jpg'); ?>") !important;
+           background-position: center; 
+           
         }
         
         //hr.star-primary:after{content: "\f001" !important; }
         
         #loginmsg {color:red;}
+        
+        /* PAG BANDA */
+        p.banda-sobre {font-size: 17px; color:#8c8c8c; text-align: center;   }
+        p.banda-experiencia {font-size: 17px; color:#8c8c8c; text-align: justify;   }
+        div.banda_detalhe p {font-size: 15px; margin-bottom: 4px;}
+        div.banda_detalhe h5 {color: #337ab7;}
+        
+        
         
         
         /* TABS */

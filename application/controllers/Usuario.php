@@ -22,8 +22,8 @@ class Usuario extends MY_Controller {
         $scripts = Array('banda.js');
         $this->SetScript($scripts);
         
-        $banda = $this->banda->getBandaUsuario($this->getUsuarioId())[0];
-        $this->SetDados('banda', $banda);
+        $banda = $this->banda->getBandaUsuario($this->getUsuarioId());
+        $this->SetDados('banda', $banda[0]);
         $this->SetDados('estilos', $this->estilo->lstEstilos());
         $this->displaySiteAdmin("banda");
     }
