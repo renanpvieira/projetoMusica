@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
-
+   
     
     private $dados = Array();
     	
@@ -20,7 +20,22 @@ class MY_Controller extends CI_Controller {
            redirect($url);
        }
     }
+    
+     public function estaLogado(){
+         return $this->session->has_userdata('musica_proj');
+     }
+    
+    public function getUsuarioId(){
+       $url = site_url('login');
+       if(!$this->session->has_userdata('musica_proj')){
+           redirect($url);
+       }else{
+           $sessao = json_decode($this->encryption->decrypt($this->session->userdata('musica_proj')), True);
+           return $sessao['UsuarioId'];
+       }
+    }
 
+    /*
     public function verificaUsuario($usuarioid){
        $url = site_url('login');
        if(!$this->session->has_userdata('musica_proj')){
@@ -33,18 +48,29 @@ class MY_Controller extends CI_Controller {
            }
        }
     }
+     
+     */
         
-    public function displaySite($view){
+    public function displaySite($view, $path = 'site/'){
+                
+         //print_r($this->dados);
+         //die();
+        $this->dados['logado'] = $this->estaLogado();
+                
         $this->load->view('site/topo', $this->dados);
-        $this->load->view('site/' . $view);
+        $this->load->view($path . $view);
         $this->load->view('site/base');
+        
+    }
+    
+    public function displaySiteAdmin($view){
+        $this->displaySite($view, 'admin/');
+    }
+    
+    public function deslogar(){
+       $this->session->unset_userdata('musica_proj');
     }
 
-    public function displayAdmin($view, $data = null){
-        $this->load->view('admin/topo', $data);
-        $this->load->view('admin/' . $view);
-        $this->load->view('admin/base');
-    }
 
     public function postResult($formValidate, $msg, $url = NULL){
        echo json_encode(array('formValidate' => $formValidate, 'msg' => $msg, 'url' => $url));

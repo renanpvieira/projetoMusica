@@ -6,31 +6,40 @@ class Usuario extends MY_Controller {
     public function __construct()
     {
          parent::__construct();
-
          $this->paginaSegura();
 
          $this->load->helper('form');
-         $this->load->model('Usuario_model', 'usuario');
-       
+         $this->load->model('Banda_model', 'banda');
+         $this->load->model('UF_model', 'uf');
+         $this->load->model('Estilo_model', 'estilo');
     }
     
+   
+    
 
-    public function banda($usuarioid)
-	{
-         $this->verificaUsuario($usuarioid);
-         echo 'foi';
-      
-
-
+    public function banda()
+    {
+        $scripts = Array('banda.js');
+        $this->SetScript($scripts);
+        
+        $banda = $this->banda->getBandaUsuario($this->getUsuarioId())[0];
+        $this->SetDados('banda', $banda);
+        $this->SetDados('estilos', $this->estilo->lstEstilos());
+        $this->displaySiteAdmin("banda");
     }
 
 
-    public function contratante($usuarioid)
+    public function contratante()
 	{
-      $this->verificaUsuario($usuarioid);
+
       echo $usuarioid . ' contratante';
 
 
+    }
+    
+    public function sair(){
+        $this->deslogar();
+        redirect("home");
     }
 
    

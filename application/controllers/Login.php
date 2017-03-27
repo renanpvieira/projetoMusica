@@ -34,9 +34,9 @@ class Login extends MY_Controller {
                 if($post['Senha'] == $this->encryption->decrypt($res[0]['Senha'])){ // Digito a senha certa
                       $this->session->set_userdata('musica_proj', $this->encryption->encrypt(json_encode($res[0])));
                       if($this->banda->VerificaBanda($res[0]['UsuarioId']) == 1){
-                         $this->postResult(TRUE, "", site_url("/usuario/banda/" . $res[0]['UsuarioId']));
+                         $this->postResult(TRUE, "", site_url("/usuario/banda/"));
                       }else{
-                         $this->postResult(TRUE, "", site_url("/usuario/contratante/" . $res[0]['UsuarioId']));
+                         $this->postResult(TRUE, "", site_url("/usuario/contratante/"));
                       }
                 }else{
                    $this->postResult(FALSE, "<p>Senha incorreta!</p>");

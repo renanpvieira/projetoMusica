@@ -31,7 +31,7 @@
                     <br />
                     <div class="row">
                         <div class="form-group col-xs-8">
-                            <input type="button"  class="btn btn-success btn-lg" value="Entrar" name="Enviar">
+                            <input type="button"  class="btn btn-success btn-lg" value="Buscar" name="Enviar">
                         </div>
                     </div>
                 </form>
@@ -74,11 +74,11 @@
                 <?php 
                    foreach($bandas as $v){
                      echo   '<div class="col-sm-4 portfolio-item">
-                                <a href="#" class="portfolio-link" data-toggle="modal">
+                                <a href="' . site_url('usuario/banda/' . $v['BandaId']) . '" class="portfolio-link" data-toggle="modal">
                                     <div class="caption">
                                         <div class="caption-content">
                                             <p>' . $v['Nome'] . '</p>
-                                            <i class="fa fa-search-plus fa-3x"></i>
+                                            <p>' . $v['estilos'] . '</p>
                                         </div>
                                     </div>
                                     <img src="' . base_url('content/imgs/' . $v['foto']) . '" class="img-responsive" alt="Cabin">

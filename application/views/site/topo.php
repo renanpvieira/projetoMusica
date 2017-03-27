@@ -12,13 +12,13 @@
     <title>Toca pra mim</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo base_url('content/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('content/template/vendor/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
 
     <!-- Theme CSS -->
-    <link href="<?php echo base_url('content/css/freelancer.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo base_url('content/template/css/freelancer.min.css'); ?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?php echo base_url('content/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url('content/template/vendor/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -36,6 +36,23 @@
            
            background-image: url("<?php echo base_url('content/css/imgs/02.jpg'); ?>") !important;
         }
+        
+        //hr.star-primary:after{content: "\f001" !important; }
+        
+        #loginmsg {color:red;}
+        
+        
+        /* TABS */
+        .nav-tabs { border-bottom: 2px solid #DDD; }
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { border-width: 0; }
+        .nav-tabs > li > a { border: none; color: #18BC9C; }
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover { border: none; color: #128f76 !important; background: transparent; }
+        .nav-tabs > li > a::after { content: ""; background: #128f76; height: 2px; position: absolute; width: 100%; left: 0px; bottom: -1px; transition: all 250ms ease 0s; transform: scale(0); }
+        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { transform: scale(1); }
+        .tab-nav > li > a::after { background: #21527d none repeat scroll 0% 0%; color: #fff; }
+        .tab-pane { padding: 15px 0; }
+        .tab-content{padding:20px}
+        
     </style>
 
 </head>
@@ -51,7 +68,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="<?php echo site_url('home'); ?>">TOCA PRA MIM</a>
             </div>
@@ -59,21 +76,19 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden active">
-                        <a href="https://blackrockdigital.github.io/startbootstrap-freelancer/#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="<?php echo site_url('login'); ?>">Login</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="<?php echo site_url('cadastro'); ?>">Cadastre-se</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="https://blackrockdigital.github.io/startbootstrap-freelancer/#contact">Contato</a>
-                    </li>
+                    <?php
+                       if($logado){
+                         echo '<li class="page-scroll"><a href="#">Mensagens  <span class="badge">3</span></a></li>';        
+                         echo '<li class="page-scroll"><a href="' . site_url('trocasenha'). '">Trocar senha</a></li>';
+                         echo '<li class="page-scroll"><a href="' . site_url('contato'). '">Contato</a></li>';
+                         echo '<li class="page-scroll"><a href="' . site_url('usuario/sair'). '">Sair</a></li>';
+                       }else{
+                         echo '<li class="page-scroll"><a href="' . site_url('login'). '">Login</a></li>';        
+                         echo '<li class="page-scroll"><a href="' . site_url('cadastro'). '">Cadastre-se</a></li>';
+                         echo '<li class="page-scroll"><a href="' . site_url('contato'). '">Contato</a></li>';
+                       }
+                    ?>
                 </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
     </nav>

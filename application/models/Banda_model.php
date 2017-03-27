@@ -20,9 +20,17 @@ class Banda_model extends CI_Model {
 
          return $this->db->query($query)->result_array();
      }
+     
+     public function getBandaUsuario($usuarioid)
+     {
+        return $this->db->get_where('banda', array('usuarioid' => $usuarioid))->result_array();
+     }
+     
+     
+     
 
      public function VerificaBanda($usuarioid){
-       $res = $this->db->get_where('banda', array('usuarioid' => $usuarioid))->result_array();
+       $res = $this->getBandaUsuario($usuarioid);
        return count($res);
      }
 

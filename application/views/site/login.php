@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-xs-12" id="login"></div>
+                            <div class="form-group col-xs-12" id="loginmsg"></div>
                         </div>
                     </form>
                 </div>
