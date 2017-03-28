@@ -10,7 +10,7 @@ class UF_model extends CI_Model {
     
 	 public function lstUFs()
      {
-         return $this->db->get('UF')->result_array();
+         return $this->db->get('uf')->result_array();
      }
 
 

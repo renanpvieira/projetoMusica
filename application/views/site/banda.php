@@ -71,7 +71,7 @@
                        <h5>Experiência</h5>  
                        <p class="banda-experiencia"><?php echo $banda['Experiencia']; ?></p>
                        
-                       <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.globo.com&width=141&layout=button&action=like&show_faces=true&share=true&height=65&appId" width="141" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                       <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Ftesteprojmusica-ga.umbler.net%2Findex.php%2Fbanda%2Findex%2F1&width=146&layout=button&action=like&size=small&show_faces=true&share=true&height=65&appId" width="146" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                    </div>
                     
                     <?php 

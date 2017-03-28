@@ -30,6 +30,12 @@ class Banda extends MY_Controller {
             $agend = $this->banda->getBandaAgenda($bandaid);
             $video = $this->banda->getBandaVideos($bandaid);
             $comen = $this->banda->getBandaComentarios($bandaid);
+            
+            if(count($fotos) >=1){
+               $img = base_url('content/imgs/'. $fotos[0]['Nome']); 
+            }
+            
+            $face = array('Titulo' => 'Toca pra mim - ' . $banda[0]['Nome'], 'Descricao' => $banda[0]['Sobre'], 'Imagem' => $img);
 
             $this->SetDados('banda', $banda[0]);
             $this->SetDados('fotos', $fotos);
@@ -38,6 +44,10 @@ class Banda extends MY_Controller {
             $this->SetDados('agenda', $agend);
             $this->SetDados('videos', $video);
             $this->SetDados('comentarios', $comen);
+            $this->SetDados('facebook', $face);
+            
+            
+            
 
             $this->displaySite("banda");
             
@@ -50,6 +60,7 @@ class Banda extends MY_Controller {
         
        
     }
+
 
 
   

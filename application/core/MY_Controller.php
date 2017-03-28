@@ -53,8 +53,8 @@ class MY_Controller extends CI_Controller {
         
     public function displaySite($view, $path = 'site/'){
                 
-         //print_r($this->dados);
-         //die();
+        //print_r($this->dados);
+        //die();
         $this->dados['logado'] = $this->estaLogado();
                 
         $this->load->view('site/topo', $this->dados);

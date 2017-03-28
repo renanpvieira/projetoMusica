@@ -6,10 +6,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        
+        <?php 
+           if(isset($facebook)){
+               echo '<meta name="og:description" content="'. $facebook['Descricao'] .'">
+                     <meta property="og:image" content="'. $facebook['Imagem'] .'">
+                     <meta property="og:image:type" content="image/jpeg">
+                     <meta property="og:image:width" content="350"> 
+                     <meta property="og:image:height" content="350"> 
+                     <title>' . $facebook['Titulo'] . '</title>';
+           }else{
+               echo '<title>Toca pra mim</title>';
+           }
+           
+        ?>
+        
+        
+        
 
-    <title>Toca pra mim</title>
+    
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('content/template/vendor/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
