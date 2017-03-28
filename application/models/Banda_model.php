@@ -57,9 +57,14 @@ class Banda_model extends CI_Model {
         return $this->db->get_where('banda_agenda', array('bandaid' => $bandaid))->result_array();
      }
      
-      public function getBandaVideos($bandaid)
+     public function getBandaVideos($bandaid)
      {
         return $this->db->get_where('banda_youtube', array('bandaid' => $bandaid))->result_array();
+     }
+     
+     public function getBandaComentarios($bandaid)
+     {
+        return $this->db->get_where('banda_comentario', array('bandaid' => $bandaid))->result_array();
      }
      
      

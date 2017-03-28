@@ -3,7 +3,12 @@ pode dar curtidas para bandas (estrela)
 banda pode cadastra uma url de play list.. perguntar pra andre em que site faz isso..
 botao de like facebook.. para cada banda
 
-denunciar (caso você seja da  banda e ela estaja cadastrada mais não foi vc)
+denunciar (caso vocï¿½ seja da  banda e ela estaja cadastrada mais nï¿½o foi vc)
 
 experienca com..   (foi)
 fale um pouco sobre a banda.. (foi)
+
+
+precisa snitizar a url do youtube 
+https://www.youtube.com/watch?v=ZHoLaLlL5lA
+https://www.youtube.com/embed/ZHoLaLlL5lA

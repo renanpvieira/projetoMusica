@@ -74,90 +74,44 @@
                        <iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.globo.com&width=141&layout=button&action=like&show_faces=true&share=true&height=65&appId" width="141" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
                    </div>
                     
-                    <div class="col-xs-12 banda_detalhe">
-                        <br />
-                        <br />
-                        <h5>GALERIA DE Vídeos</h5> 
-                            <div class="col-xs-4 banda_detalhe">
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                            </div>
-                            <div class="col-xs-4 banda_detalhe">
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                            </div>
-                            <div class="col-xs-4 banda_detalhe">
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                                <iframe width="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k"> </iframe>
-                            </div>
-                    </div>
-                    
-                    <div class="col-xs-12 banda_detalhe">
-                       <br /> 
-                       <br /> 
-                       <h5>Galeria de fotos</h5>
-                        
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                       <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                           <a class="thumbnail" href="#">
-                               <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-                           </a>
-                       </div>
-                    </div>
+                    <?php 
+                   
+                        if(count($videos) >= 1 ){
+                           echo '<div class="col-xs-12 banda_detalhe">
+                                    <br />
+                                    <br />
+                                    <h5>GALERIA DE Vídeos</h5> ';
+                           
+                                foreach ($videos as $v){
+                                    echo '<div class="col-lg-4 col-md-3 col-xs-6 thumb"> <iframe width="100%" src="'. $v['URL'] .'"> </iframe> </div>';
+                                }
+                           echo '</div>';
+                       }
+                   
+                       if(count($fotos) >= 1 ){
+                           echo '<div class="col-xs-12 banda_detalhe">
+                                    <br />
+                                    <br />
+                                    <h5>GALERIA DE FOTOS</h5> ';
+                                foreach ($fotos as $f){
+                                    echo ' <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                              <a class="thumbnail" href="#"> <img class="img-responsive" src="' . base_url('content/imgs/' . $f['Nome']) . '" alt=""></a>
+                                           </div>';
+                                }
+                           echo '</div>';
+                       }
+                       
+                        if(count($comentarios) >= 1 ){
+                           echo '<div class="col-xs-12 banda_detalhe">
+                                    <br />
+                                    <br />
+                                    <h5>O que estão falando sobre '. $banda['Nome'] .'</h5> ';
+                                foreach ($comentarios as $c){
+                                    echo '<p>"<i>' . $c['Texto'] . '</i>"<br /><b>'. $c['FromNome'] .'</b></p><br />';
+                                }
+                           echo '</div>';
+                       }
+                    ?>
                     
                 </div> 
             </div> <!-- FIM DIV ROW FORM-->

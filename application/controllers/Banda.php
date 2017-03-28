@@ -8,46 +8,47 @@ class Banda extends MY_Controller {
          parent::__construct();
          $this->load->model('Banda_model', 'banda');
     }
-    
    
-    
-
     public function index($bandaid)
     {
+        try {
+            
+            if(!is_numeric($bandaid) || strlen($bandaid) > 6){ /* Se deus quiser um dia esse numero vai aumenta */
+              redirect('erro');
+              die();  
+            }
+            
+            $banda = $this->banda->getBanda($bandaid);
+            if(count($banda) != 1){
+              redirect('erro');
+              die();  
+            }
+            
+            $fotos = $this->banda->getBandaFotos($bandaid);
+            $telef = $this->banda->getBandaTelefones($bandaid);
+            $email = $this->banda->getBandaEmails($bandaid);
+            $agend = $this->banda->getBandaAgenda($bandaid);
+            $video = $this->banda->getBandaVideos($bandaid);
+            $comen = $this->banda->getBandaComentarios($bandaid);
+
+            $this->SetDados('banda', $banda[0]);
+            $this->SetDados('fotos', $fotos);
+            $this->SetDados('telefones', $telef);
+            $this->SetDados('emails', $email);
+            $this->SetDados('agenda', $agend);
+            $this->SetDados('videos', $video);
+            $this->SetDados('comentarios', $comen);
+
+            $this->displaySite("banda");
+            
+            
+        } catch (Exception $e) {
+            echo 'Exceção capturada: ',  $e->getMessage(), "\n";
+        }
         
       
-        $banda = $this->banda->getBanda($bandaid);
-        $fotos = $this->banda->getBandaFotos($bandaid);
         
-        $telef = $this->banda->getBandaTelefones($bandaid);
-        $email = $this->banda->getBandaEmails($bandaid);
-        $agend = $this->banda->getBandaAgenda($bandaid);
-        $video = $this->banda->getBandaVideos($bandaid);
-        
-        $this->SetDados('banda', $banda[0]);
-        
-        /*
-        $fotos = ((count($fotos) > 0) ? $fotos : NULL);
-        $telef = ((count($telef) > 0) ? $telef : NULL);
-        $email = ((count($email) > 0) ? $email : NULL);
-        $agend = ((count($agend) > 0) ? $agend : NULL);
-        $video = ((count($video) > 0) ? $video : NULL);
-        */
-        
-        $this->SetDados('fotos', $fotos);
-        $this->SetDados('telefones', $telef);
-        $this->SetDados('emails', $email);
-        $this->SetDados('agenda', $agend);
-        $this->SetDados('videos', $video);
        
-        
-        
-        
-        
-        $this->displaySite("banda");
-        
-        
-        
     }
 
 
