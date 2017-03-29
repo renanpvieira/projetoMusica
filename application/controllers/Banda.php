@@ -14,13 +14,13 @@ class Banda extends MY_Controller {
         try {
             
             if(!is_numeric($bandaid) || strlen($bandaid) > 6){ /* Se deus quiser um dia esse numero vai aumenta */
-              redirect('erro');
+              redirect('erro/bandaInexistente');
               die();  
             }
             
             $banda = $this->banda->getBanda($bandaid);
             if(count($banda) != 1){
-              redirect('erro');
+              redirect('erro/bandaInexistente');
               die();  
             }
             
@@ -30,11 +30,9 @@ class Banda extends MY_Controller {
             $agend = $this->banda->getBandaAgenda($bandaid);
             $video = $this->banda->getBandaVideos($bandaid);
             $comen = $this->banda->getBandaComentarios($bandaid);
+                        
             
-            if(count($fotos) >=1){
-               $img = base_url('content/imgs/'. $fotos[0]['Nome']); 
-            }
-            
+            $img = ((count($fotos) >=1) ? base_url('content/imgs/'. $fotos[0]['Nome']) : 'IMGPADRAO');
             $face = array('Titulo' => 'Toca pra mim - ' . $banda[0]['Nome'], 'Descricao' => $banda[0]['Sobre'], 'Imagem' => $img);
 
             $this->SetDados('banda', $banda[0]);
@@ -45,10 +43,6 @@ class Banda extends MY_Controller {
             $this->SetDados('videos', $video);
             $this->SetDados('comentarios', $comen);
             $this->SetDados('facebook', $face);
-            
-            
-            
-
             $this->displaySite("banda");
             
             
