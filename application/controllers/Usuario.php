@@ -11,7 +11,10 @@ class Usuario extends MY_Controller {
          $this->load->helper('form');
          $this->load->model('Banda_model', 'banda');
          $this->load->model('UF_model', 'uf');
+         $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
+                 
+         
     }
     
    
@@ -25,6 +28,7 @@ class Usuario extends MY_Controller {
         $banda = $this->banda->getBandaUsuario($this->getUsuarioId());
         $this->SetDados('banda', $banda[0]);
         $this->SetDados('estilos', $this->estilo->lstEstilos());
+        $this->SetDados('ufs', $this->uf->lstUFs());
         $this->displaySiteAdmin("banda");
     }
 
@@ -35,6 +39,12 @@ class Usuario extends MY_Controller {
       echo $usuarioid . ' contratante';
 
 
+    }
+    
+    public function cidades()
+    {
+        $post = $this->input->post();
+        echo json_encode($this->cidade->lstCidades($post['uf']));
     }
     
     public function sair(){

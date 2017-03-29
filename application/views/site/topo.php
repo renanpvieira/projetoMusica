@@ -78,6 +78,8 @@
         .tab-pane { padding: 15px 0; }
         .tab-content{padding:20px}
         
+        select, option {border: none !important; outline: none !important;}
+        
     </style>
 
 </head>

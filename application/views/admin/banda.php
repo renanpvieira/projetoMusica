@@ -153,9 +153,44 @@
                                     </tr>
                                 </table>
                             </div>
-                        </div> <!-- FIM  -->
-                        <div role="tabpanel" class="tab-pane" id="imagens"></div>
-                        <div role="tabpanel" class="tab-pane" id="cidades"></div>
+                        </div> <!-- FIM DIV TAB CONTATOS -->
+                        <div role="tabpanel" class="tab-pane" id="imagens">
+                            
+                        </div> <!-- FIM DIV TAB IMAGENS -->
+                        <div role="tabpanel" class="tab-pane" id="cidades">
+                            <h4>Selecione as cidades</h4>
+                            <form name="cidades" id="contactForm" novalidate="">
+                                 
+                                 
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-4 floating-label-form-group controls">
+                                        <select class="form-control" id="selectuf" name="uf">
+                                            <?php
+                                               foreach($ufs as $uf){
+                                                   echo '<option value="'. $uf['UFId'] .'">'. $uf['Descricao'] .'</option>';
+                                               }
+                                            ?>
+                                        </select>
+                                    </div>                                                                       
+                                    
+                                    <div class="form-group col-xs-6 floating-label-form-group controls">
+                                        <select class="form-control" id="selectcidade" name="cidade"></select>
+                                    </div>
+                                    
+                                    <div class="form-group col-xs-2 controls">
+                                         <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="Salvar">
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                                
+                            </form>
+                            
+    
+                            
+                            
+                        </div> <!-- FIM DIV TAB CIDADES -->
                         <div role="tabpanel" class="tab-pane" id="estilos">
                             <h4>Selecione os estilos que mais representam a sua banda</h4>
                             <form name="login" id="contactForm" novalidate="">

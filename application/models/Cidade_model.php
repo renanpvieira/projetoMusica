@@ -8,10 +8,10 @@ class Cidade_model extends CI_Model {
            parent::__construct();
     }
     
-	 public function lstCidades($uf)
-     {
-         return $this->db->get('Cidade')->result_array();
-     }
+    public function lstCidades($uf)
+    {
+       return $this->db->get_where('cidade', array('ufid' => $uf))->result_array();
+    }
 
 
 }

@@ -8,7 +8,7 @@ class UF_model extends CI_Model {
            parent::__construct();
     }
     
-	 public function lstUFs()
+     public function lstUFs()
      {
          return $this->db->get('uf')->result_array();
      }
