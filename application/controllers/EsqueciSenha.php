@@ -33,12 +33,24 @@ class EsqueciSenha extends MY_Controller {
          $this->load->helper('form');
          $this->load->library('session');
          $this->load->model('Usuario_model', 'usuario');
+         //$this->load->model('Banda_model', 'banda');
          //$this->load->library('email');
          
 
          $scripts = Array('esquecisenha.js');
          $this->SetScript($scripts);
     }
+    
+    public function teste()
+    {
+        //$this->session->set_tempdata('recuperasenha', 'dddd', 10800);
+       // $this->session->unset_tempdata('recuperasenha');
+        
+        //$d = array("BandaId" => 1, "DDD" => "21", "Numero" => "0000");
+        //echo $this->banda->adicionaTelefone($d);
+    }
+    
+    
       
 
     public function index()

@@ -42,11 +42,33 @@ class Banda_model extends CI_Model {
         return $this->db->get_where('banda_foto', array('bandaid' => $bandaid))->result_array();
      }
      
+     /* TELEFONE */
+     public function adicionaTelefone($dados){
+          $this->db->insert('banda_telefone', $dados);
+          return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
+     }
+     
+     public function DeleteTelefone($telefoneid, $bandaid){
+        $this->db->delete('banda_telefone', array('BandaTelefoneId' => $telefoneid, 'BandaId' => $bandaid));
+        return $this->db->affected_rows();
+     }
+     
      public function getBandaTelefones($bandaid)
      {
         return $this->db->get_where('banda_telefone', array('bandaid' => $bandaid))->result_array();
      }
      
+      /* EMAILS */
+     public function adicionaEmail($dados){
+          $this->db->insert('banda_email', $dados);
+          return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
+     }
+     
+     public function DeleteEmail($emailid, $bandaid){
+        $this->db->delete('banda_email', array('BandaEmailId' => $emailid, 'BandaId' => $bandaid));
+        return $this->db->affected_rows();
+     }
+          
      public function getBandaEmails($bandaid)
      {
         return $this->db->get_where('banda_email', array('bandaid' => $bandaid))->result_array();
@@ -67,13 +89,17 @@ class Banda_model extends CI_Model {
         return $this->db->get_where('banda_comentario', array('bandaid' => $bandaid))->result_array();
      }
      
-     
-     
-
      public function VerificaBanda($usuarioid){
        $res = $this->getBandaUsuario($usuarioid);
        return count($res);
      }
+          
+     public function atualizaBanda($dados, $usuarioid){
+        date_default_timezone_set('America/Sao_Paulo');
+        $dados['Atualizacao'] = date('Y-m-d h:i:s', time()); 
+        $this->db->where('usuarioid', $usuarioid)->update('banda', $dados);
+        return $this->db->affected_rows();
+    }
 
 
 }

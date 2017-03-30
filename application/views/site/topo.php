@@ -105,6 +105,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php
                        if($logado){
+                         echo '<li class="page-scroll"><a href="' . site_url('usuario/banda/'). '">Painel</a></li>';
                          echo '<li class="page-scroll"><a href="#">Mensagens  <span class="badge">3</span></a></li>';        
                          echo '<li class="page-scroll"><a href="' . site_url('trocasenha'). '">Trocar senha</a></li>';
                          echo '<li class="page-scroll"><a href="' . site_url('contato'). '">Contato</a></li>';

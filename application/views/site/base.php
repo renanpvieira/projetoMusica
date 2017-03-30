@@ -71,6 +71,9 @@
          }
 
          function Site_Url(url){  return '<?php echo site_url(); ?>' + url; }
+         
+     
+         
     </script>
     
     

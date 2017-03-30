@@ -34,6 +34,16 @@ class MY_Controller extends CI_Controller {
            return $sessao['UsuarioId'];
        }
     }
+    
+    public function getUsuarioLogin(){
+       $url = site_url('login');
+       if(!$this->session->has_userdata('musica_proj')){
+           redirect($url);
+       }else{
+           $sessao = json_decode($this->encryption->decrypt($this->session->userdata('musica_proj')), True);
+           return $sessao['Login'];
+       }
+    }
 
     /*
     public function verificaUsuario($usuarioid){

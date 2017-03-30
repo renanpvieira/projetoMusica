@@ -22,6 +22,13 @@ class Usuario_model extends CI_Model {
          return 0; 
        }
     }
+    
+    public function atualizaUsuario($dados, $usuarioid){
+        date_default_timezone_set('America/Sao_Paulo');
+        $dados['Atualizacao'] = date('Y-m-d h:i:s', time());
+        $this->db->where('usuarioid', $usuarioid)->update('usuario', $dados);
+        return $this->db->affected_rows();
+    }
 
     public function deletaUsuario($usuarioid){
        $this->db->delete('usuario', array('UsuarioId' => $usuarioid));
