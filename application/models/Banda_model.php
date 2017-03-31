@@ -8,8 +8,7 @@ class Banda_model extends CI_Model {
            parent::__construct();
     }
     
-     public function lstBandas($offset = 0)
-     {
+     public function lstBandas($offset = 0){
          $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, banda_foto.Nome as foto,  
                    (select group_concat(descricao SEPARATOR " - ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
                    (select group_concat(descricao SEPARATOR " - ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
@@ -21,13 +20,11 @@ class Banda_model extends CI_Model {
          return $this->db->query($query)->result_array();
      }
      
-     public function getBandaUsuario($usuarioid)
-     {
+     public function getBandaUsuario($usuarioid){
         return $this->db->get_where('banda', array('usuarioid' => $usuarioid))->result_array();
      }
      
-     public function getBanda($bandaid)
-     {
+     public function getBanda($bandaid){
          $query = 'select B.*,  
                    (select group_concat(descricao SEPARATOR ", ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
                    (select group_concat(descricao SEPARATOR ", ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
@@ -37,8 +34,7 @@ class Banda_model extends CI_Model {
         
      }
      
-     public function getBandaFotos($bandaid)
-     {
+     public function getBandaFotos($bandaid) {
         return $this->db->get_where('banda_foto', array('bandaid' => $bandaid))->result_array();
      }
      
@@ -53,12 +49,12 @@ class Banda_model extends CI_Model {
         return $this->db->affected_rows();
      }
      
-     public function getBandaTelefones($bandaid)
-     {
+     public function getBandaTelefones($bandaid){
         return $this->db->get_where('banda_telefone', array('bandaid' => $bandaid))->result_array();
      }
      
-      /* EMAILS */
+     
+     /* EMAILS */
      public function adicionaEmail($dados){
           $this->db->insert('banda_email', $dados);
           return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
@@ -69,23 +65,37 @@ class Banda_model extends CI_Model {
         return $this->db->affected_rows();
      }
           
-     public function getBandaEmails($bandaid)
-     {
+     public function getBandaEmails($bandaid){
         return $this->db->get_where('banda_email', array('bandaid' => $bandaid))->result_array();
      }
      
-     public function getBandaAgenda($bandaid)
-     {
+     
+     /*ESTILOS */
+     public function getBandaEstilos($bandaid){
+        return $this->db->get_where('banda_estilo', array('bandaid' => $bandaid))->result_array();
+     }
+     
+     public function deleteEstilos($bandaid){
+        $this->db->delete('banda_estilo', array('BandaId' => $bandaid));
+        return $this->db->affected_rows();
+     }
+     
+     public function insereEstilos($dados){
+        $this->db->insert_batch('banda_estilo', $dados);
+        return $this->db->affected_rows();
+     }
+     
+     
+     
+     public function getBandaAgenda($bandaid){
         return $this->db->get_where('banda_agenda', array('bandaid' => $bandaid))->result_array();
      }
      
-     public function getBandaVideos($bandaid)
-     {
+     public function getBandaVideos($bandaid){
         return $this->db->get_where('banda_youtube', array('bandaid' => $bandaid))->result_array();
      }
      
-     public function getBandaComentarios($bandaid)
-     {
+     public function getBandaComentarios($bandaid){
         return $this->db->get_where('banda_comentario', array('bandaid' => $bandaid))->result_array();
      }
      

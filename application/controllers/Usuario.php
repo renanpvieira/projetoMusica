@@ -14,23 +14,33 @@ class Usuario extends MY_Controller {
          $this->load->model('Usuario_model', 'usuario');
          $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
-                 
-         
     }
     
    
     
 
     public function banda()    {
-        $scripts = Array('bandaConfiguracao.js', 'bandaContato.js');
+        $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js');
         $this->SetScript($scripts);
         
         $banda = $this->banda->getBandaUsuario($this->getUsuarioId());
         $login = $this->getUsuarioLogin();
+        
+        $estilo = $this->estilo->lstEstilos();
+        $bandaestilo = $this->banda->getBandaEstilos($banda[0]['BandaId']);
+        
+        for($i=0; $i<count($estilo); $i++){
+            $estilo[$i]['Checado'] = false;
+            for($j=0; $j<count($bandaestilo); $j++){
+               if($bandaestilo[$j]['EstiloId'] == $estilo[$i]['EstiloId']){
+                 $estilo[$i]['Checado'] = true;    
+               }
+            }
+        }
                 
         $this->SetDados('bandaLogin', $login);
         $this->SetDados('banda', $banda[0]);
-        $this->SetDados('estilos', $this->estilo->lstEstilos());
+        $this->SetDados('estilos', $estilo);
         $this->SetDados('emails', $this->banda->getBandaEmails($banda[0]['BandaId']));
         $this->SetDados('telefones', $this->banda->getBandaTelefones($banda[0]['BandaId']));
         $this->SetDados('ufs', $this->uf->lstUFs());
@@ -136,10 +146,30 @@ class Usuario extends MY_Controller {
         }
      }
     
-    
-    
-    
-    public function cidades() {
+     public function estilos(){
+         $usuarioid = $this->getUsuarioId();  
+         $post = $this->input->post();
+         $dados = Array();
+         $banda = $this->banda->getBandaUsuario($usuarioid);
+         
+         $this->banda->deleteEstilos($banda[0]['BandaId']);
+         if(count($post['estilo']) >= 1){
+            for($i=0;$i < count($post['estilo']); $i++){
+              $dados[$i] = Array('BandaId' => $banda[0]['BandaId'], 'EstiloId' => $post['estilo'][$i]);
+            }
+         }
+         $ret = $this->banda->insereEstilos($dados);
+         if(count($post['estilo']) == $ret){
+             $this->postResult(TRUE, "");
+         }else{
+             $this->postResult(FALSE, "Não foi possível atualizar esses dados, favor tentar mais tarde!");
+         }
+     }
+
+
+
+
+     public function cidades() {
         $post = $this->input->post();
         echo json_encode($this->cidade->lstCidades($post['uf']));
     }

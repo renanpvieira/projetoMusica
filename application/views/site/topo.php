@@ -63,9 +63,8 @@
         p.banda-experiencia {font-size: 17px; color:#8c8c8c; text-align: justify;   }
         div.banda_detalhe p {font-size: 15px; margin-bottom: 4px;}
         div.banda_detalhe h5 {color: #337ab7;}
-        
-        
-        
+                
+        div.checkboxmenor { margin-top: 2px !important; margin-bottom: 2px !important;}
         
         /* TABS */
         .nav-tabs { border-bottom: 2px solid #DDD; }

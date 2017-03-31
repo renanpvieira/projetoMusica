@@ -10,8 +10,8 @@ class Estilo_model extends CI_Model {
     
 	 public function lstEstilos()
      {
-         //return $this->db->order_by('Descricao', 'ASC')->get('estilo')->result_array();
-             return $this->db->get('estilo')->result_array();
+         return $this->db->order_by('Descricao', 'ASC')->get('estilo')->result_array();
+         //    return $this->db->get('estilo')->result_array();
      }
 
 

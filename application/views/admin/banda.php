@@ -19,7 +19,7 @@
                         <li role="presentation"><a href="#cidades" aria-controls="cidades" role="tab" data-toggle="tab">Cidades</a></li>
                         <li role="presentation"><a href="#estilos" aria-controls="estilos" role="tab" data-toggle="tab">Estilos</a></li>
                         <li role="presentation"><a href="#mensagens" aria-controls="mensagens" role="tab" data-toggle="tab">Mensagens</a></li>
-                        <li role="presentation"><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>
+                        <!--<li role="presentation"><a href="#agenda" aria-controls="agenda" role="tab" data-toggle="tab">Agenda</a></li>-->
                     </ul>
                     
                     <!-- Tab panes -->
@@ -86,9 +86,6 @@
                                         <textarea class="form-control" name="Experiencia" placeholder="Fale sobre as experiencias da banda" ><?php echo $banda['Experiencia'];  ?></textarea>
                                     </div>
                                 </div>
-                                
-                                
-
                                 <br />
                                 <div class="row">
                                     <div class="form-group col-xs-8">
@@ -215,55 +212,26 @@
                         </div> <!-- FIM DIV TAB CIDADES -->
                         <div role="tabpanel" class="tab-pane" id="estilos">
                             <h4>Selecione os estilos que mais representam a sua banda</h4>
-                            <form name="login" id="contactForm" novalidate="">
+                            <form name="estilos" id="contactForm" novalidate="">
                                 <div class="row control-group">
                                 <?php
-                                
-                                
-                                    $qtdcoluna = (int)(count($estilos) / 4);
-                                    $qtdprimeiracoluna = count($estilos) - (((int)(count($estilos) / 4)) * 3);
-                                    echo '<div class="form-group col-xs-3">';
-                                    for($i = 0; $i < $qtdprimeiracoluna; $i++){
-                                        echo '<div class="checkbox">
-                                                <label>
-                                                  ' . form_checkbox('estilo[]', $estilos[$i]['EstiloId'], False) . $estilos[$i]['Descricao'] .
-                                                '</label>
-                                               </div>'; 
+                                    foreach($estilos as $estilo){
+                                        echo ' <div class="col-lg-3 col-md-4 col-xs-6">
+                                                    <div class="checkbox checkboxmenor">
+                                                        <label>' .  form_checkbox('estilo[]', $estilo['EstiloId'], $estilo['Checado']) .  $estilo['Descricao'] . '</label>
+                                                    </div>
+                                                </div>';
                                     }
-                                    echo '</div>';
-                                    echo '<div class="form-group col-xs-3">';
-                                    for($i = $qtdprimeiracoluna; $i < ($qtdprimeiracoluna + $qtdcoluna); $i++){
-                                       echo '<div class="checkbox">
-                                                <label>
-                                                  ' . form_checkbox('estilo[]', $estilos[$i]['EstiloId'], False) . $estilos[$i]['Descricao'] .
-                                                '</label>
-                                               </div>';
-                                    }
-                                    echo '</div>';
-                                    echo '<div class="form-group col-xs-3">';
-                                    for($i = ($qtdprimeiracoluna + $qtdcoluna); $i < ($qtdprimeiracoluna + ($qtdcoluna * 2)); $i++){
-                                      echo '<div class="checkbox">
-                                                <label>
-                                                  ' . form_checkbox('estilo[]', $estilos[$i]['EstiloId'], False) . $estilos[$i]['Descricao'] .
-                                                '</label>
-                                               </div>';
-                                    }
-                                    echo '</div>';
-                                    echo '<div class="form-group col-xs-3">';
-                                    for($i = ($qtdprimeiracoluna + ($qtdcoluna * 2)); $i < ($qtdprimeiracoluna + ($qtdcoluna * 3)); $i++){
-                                       echo '<div class="checkbox">
-                                                <label>
-                                                  ' . form_checkbox('estilo[]', $estilos[$i]['EstiloId'], False) . $estilos[$i]['Descricao'] .
-                                                '</label>
-                                               </div>';
-                                    }
-                                    echo '</div>';
                                  ?>
                                 </div>
+                                <br />
                                 <div class="row">
                                     <div class="form-group col-xs-8">
-                                        <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="Enviar">
+                                        <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="estilos">
                                     </div>
+                                </div>
+                                <div class="row">
+                                        <div class="form-group col-xs-12" id="estilomsg"></div>
                                 </div>
                             </form>
                         </div> <!-- FIM DIV TAB ESTILOS -->
