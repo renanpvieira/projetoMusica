@@ -54,6 +54,8 @@
            
         }
         
+        .grid-botoes {text-align: right;}
+        
         //hr.star-primary:after{content: "\f001" !important; }
         
         #loginmsg {color:red;}

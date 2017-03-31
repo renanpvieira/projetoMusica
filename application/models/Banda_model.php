@@ -86,6 +86,27 @@ class Banda_model extends CI_Model {
      }
      
      
+     /*CIDADES */
+     public function getBandaCidades($bandaid){
+         return $this->db->select('BandaCidadeId,  cidade.descricao as CidadeDescricao, uf.descricao as UFDescricao')
+                            ->from('banda_cidade')
+                            ->join('cidade', 'cidade.cidadeid = banda_cidade.cidadeid')
+                            ->join('uf', 'cidade.ufid = uf.ufid')
+                            ->where('banda_cidade.bandaid', $bandaid)
+                            ->get()
+                            ->result_array();
+     }
+     
+     public function insereCidade($dados){
+        $this->db->insert('banda_cidade', $dados);
+        return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
+     }
+     
+     public function deletaCidade($bandacidadeid, $bandaid){
+        $this->db->delete('banda_cidade', array('BandaId' => $bandaid, 'BandaCidadeId' => $bandacidadeid));
+        return $this->db->affected_rows();
+     }
+     
      
      public function getBandaAgenda($bandaid){
         return $this->db->get_where('banda_agenda', array('bandaid' => $bandaid))->result_array();
@@ -98,6 +119,8 @@ class Banda_model extends CI_Model {
      public function getBandaComentarios($bandaid){
         return $this->db->get_where('banda_comentario', array('bandaid' => $bandaid))->result_array();
      }
+     
+     
      
      public function VerificaBanda($usuarioid){
        $res = $this->getBandaUsuario($usuarioid);

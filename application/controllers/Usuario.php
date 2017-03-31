@@ -14,21 +14,23 @@ class Usuario extends MY_Controller {
          $this->load->model('Usuario_model', 'usuario');
          $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
+         
+         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js');
+         $this->SetScript($scripts);
     }
     
    
     
 
     public function banda()    {
-        $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js');
-        $this->SetScript($scripts);
-        
+               
         $banda = $this->banda->getBandaUsuario($this->getUsuarioId());
         $login = $this->getUsuarioLogin();
         
         $estilo = $this->estilo->lstEstilos();
         $bandaestilo = $this->banda->getBandaEstilos($banda[0]['BandaId']);
         
+        /* MONTANDO O ARRAY DE ESTILOS */
         for($i=0; $i<count($estilo); $i++){
             $estilo[$i]['Checado'] = false;
             for($j=0; $j<count($bandaestilo); $j++){
@@ -44,6 +46,8 @@ class Usuario extends MY_Controller {
         $this->SetDados('emails', $this->banda->getBandaEmails($banda[0]['BandaId']));
         $this->SetDados('telefones', $this->banda->getBandaTelefones($banda[0]['BandaId']));
         $this->SetDados('ufs', $this->uf->lstUFs());
+        $this->SetDados('bandacidades', $this->banda->getBandaCidades($banda[0]['BandaId']));
+        
         $this->displaySiteAdmin("banda");
     }
   
@@ -145,6 +149,32 @@ class Usuario extends MY_Controller {
             $this->postResult(FALSE, validation_errors());
         }
      }
+       
+     
+     
+    public function deletaCidade() {
+        $usuarioid = $this->getUsuarioId();
+        $post = $this->input->post();
+        $banda = $this->banda->getBandaUsuario($usuarioid); // SOMENTE PARA NAO CORRER O RISCO DE DELETE UM REGISTRO ERRADO
+        echo $this->banda->deletaCidade($post['BandaCidadeId'], $banda[0]['BandaId']);
+    }
+     
+    public function adicionaCidade() {
+        $usuarioid = $this->getUsuarioId();
+        $cidadeid = $this->input->post("cidade");
+        if(is_numeric($cidadeid)){
+            $banda = $this->banda->getBandaUsuario($usuarioid);
+            $dados = array('BandaId' => $banda[0]['BandaId'], 'CidadeId' => $cidadeid);
+            $ret = $this->banda->insereCidade($dados);
+            if($ret >= 1){
+                $this->postResult(TRUE, $ret);
+            } else {
+                $this->postResult(FALSE, "<p>Houve um problema ao adicionar essa cidade! Tente mais tarde!</p>");
+            }
+        }else{
+           $this->postResult(FALSE, "<p>Erro ao salvar a cidade!</p>");
+        }
+    }
     
      public function estilos(){
          $usuarioid = $this->getUsuarioId();  

@@ -54,11 +54,15 @@ $(document).ready(function () {
                 btn.attr("class", "btn btn-success btn-xs");
                 btn.attr("value", "Deletar");
                 btn.attr("name", "deletefone");
+                
+                var tdbtn = $('<td>');
+                tdbtn.attr("class", "grid-botoes");
+                tdbtn.append(btn);
 
                 var tr = $('<tr>').attr("data-fone", ret.msg);
                 tr.append($('<td>').text(form[0].value));
                 tr.append($('<td>').text(form[1].value));
-                tr.append($('<td>').append(btn));
+                tr.append(tdbtn);
                 $('#tabela-fone').append(tr);
                 
             } else {
@@ -127,10 +131,14 @@ $(document).ready(function () {
                 btn.attr("class", "btn btn-success btn-xs");
                 btn.attr("value", "Deletar");
                 btn.attr("name", "deletemail");
+                
+                var tdbtn = $('<td>');
+                tdbtn.attr("class", "grid-botoes");
+                tdbtn.append(btn);
 
                 var tr = $('<tr>').attr("data-mail", ret.msg);
                 tr.append($('<td>').text(form[0].value));
-                tr.append($('<td>').append(btn));
+                tr.append(tdbtn);
                 $('#tabela-mail').append(tr);
                 
             } else {

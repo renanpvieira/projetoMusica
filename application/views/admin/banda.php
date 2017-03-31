@@ -125,7 +125,7 @@
                                     
                                     if(count($emails) >= 1){
                                         foreach($emails as $mail){
-                                          echo '<tr data-mail="' . $mail['BandaEmailId'] . '" ><td>' . $mail['Email'] . '</td><td><input type="button"  data-mail="' . $mail['BandaEmailId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletemail"></td></tr>';
+                                          echo '<tr data-mail="' . $mail['BandaEmailId'] . '" ><td>' . $mail['Email'] . '</td><td class="grid-botoes"><input type="button"  data-mail="' . $mail['BandaEmailId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletemail"></td></tr>';
                                         }
                                     }else{
                                         echo '<tr><td colspan="2">Nenhum e-mail informado!</td></tr>';
@@ -164,7 +164,7 @@
                                 <?php
                                     if(count($telefones) >= 1){
                                         foreach($telefones as $tel){
-                                          echo '<tr data-fone="' . $tel['BandaTelefoneId'] . '" ><td>' . $tel['DDD'] . '</td><td>' . $tel['Numero'] . '</td><td><input type="button" data-fone="' . $tel['BandaTelefoneId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletefone"></td></tr>';
+                                          echo '<tr data-fone="' . $tel['BandaTelefoneId'] . '" ><td>' . $tel['DDD'] . '</td><td>' . $tel['Numero'] . '</td><td class="grid-botoes"><input type="button" data-fone="' . $tel['BandaTelefoneId'] . '" class="btn btn-success btn-xs btn-danger" value="Deletar" name="deletefone"></td></tr>';
                                         }
                                     }else{
                                         echo '<tr><td colspan="3">Nenhum telefone informado!</td></tr>';
@@ -178,9 +178,7 @@
                         </div> <!-- FIM DIV TAB IMAGENS -->
                         <div role="tabpanel" class="tab-pane" id="cidades">
                             <h4>Selecione as cidades</h4>
-                            <form name="cidades" id="contactForm" novalidate="">
-                                 
-                                 
+                            <form name="form-cidade" id="contactForm" novalidate="">
                                 <div class="row control-group">
                                     <div class="form-group col-xs-4 floating-label-form-group controls">
                                         <select class="form-control" id="selectuf" name="uf">
@@ -191,24 +189,36 @@
                                             ?>
                                         </select>
                                     </div>                                                                       
-                                    
                                     <div class="form-group col-xs-6 floating-label-form-group controls">
                                         <select class="form-control" id="selectcidade" name="cidade"></select>
                                     </div>
-                                    
                                     <div class="form-group col-xs-2 controls">
-                                         <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="Salvar">
+                                         <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionacidade">
                                     </div>
-                                    
-                                    
-                                    
+                                    <div class="row">
+                                        <div class="form-group col-xs-12" id="adicionacidademsg"></div>
+                                    </div>
                                 </div>
-                                
                             </form>
-                            
-    
-                            
-                            
+                            <br />
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="tabela-cidade"> 
+                                <tr>
+                                    <td>Estado</td>
+                                    <td>Cidade</td>
+                                    <td></td>
+                                </tr>
+                                <?php
+                                    if(count($bandacidades) >= 1){
+                                        foreach($bandacidades as $cit){
+                                          echo '<tr data-cidade="' . $cit['BandaCidadeId'] . '" ><td>' . $cit['UFDescricao'] . '</td><td>' . $cit['CidadeDescricao'] . '</td><td class="grid-botoes"><input type="button" data-cidade="' . $cit['BandaCidadeId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletecidade"></td></tr>';
+                                        }
+                                    }else{
+                                        echo '<tr><td colspan="3">Nenhuma cidade informado!</td></tr>';
+                                    }
+                                ?>
+                                </table>
+                            </div>
                         </div> <!-- FIM DIV TAB CIDADES -->
                         <div role="tabpanel" class="tab-pane" id="estilos">
                             <h4>Selecione os estilos que mais representam a sua banda</h4>
