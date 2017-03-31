@@ -174,6 +174,21 @@
                             </div>
                         </div> <!-- FIM DIV TAB CONTATOS -->
                         <div role="tabpanel" class="tab-pane" id="imagens">
+                           
+                            <form name="uploadimg" id="contactForm" novalidate="" enctype="multipart/form-data">
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                                        <label for="name">Site</label>
+                                       <input type="file" name="file"  required />
+                                       <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionaimg">
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12" id="adicionafonemsg"></div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            
                             
                         </div> <!-- FIM DIV TAB IMAGENS -->
                         <div role="tabpanel" class="tab-pane" id="cidades">

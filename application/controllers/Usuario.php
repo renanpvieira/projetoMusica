@@ -9,13 +9,15 @@ class Usuario extends MY_Controller {
          $this->paginaSegura();
 
          $this->load->helper('form');
+         $this->load->library('upload');
+                  
          $this->load->model('Banda_model', 'banda');
          $this->load->model('UF_model', 'uf');
          $this->load->model('Usuario_model', 'usuario');
          $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
          
-         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js');
+         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js', 'bandaUpload.js');
          $this->SetScript($scripts);
     }
     
@@ -123,7 +125,7 @@ class Usuario extends MY_Controller {
         }
      }
      
-     public function deletaEmail() {
+    public function deletaEmail() {
         $usuarioid = $this->getUsuarioId();
         $post = $this->input->post();
         $banda = $this->banda->getBandaUsuario($usuarioid); // SOMENTE PARA NAO CORRER O RISCO DE DELETE UM REGISTRO ERRADO
@@ -151,7 +153,6 @@ class Usuario extends MY_Controller {
      }
        
      
-     
     public function deletaCidade() {
         $usuarioid = $this->getUsuarioId();
         $post = $this->input->post();
@@ -176,7 +177,7 @@ class Usuario extends MY_Controller {
         }
     }
     
-     public function estilos(){
+    public function estilos(){
          $usuarioid = $this->getUsuarioId();  
          $post = $this->input->post();
          $dados = Array();
@@ -196,10 +197,7 @@ class Usuario extends MY_Controller {
          }
      }
 
-
-
-
-     public function cidades() {
+    public function cidades() {
         $post = $this->input->post();
         echo json_encode($this->cidade->lstCidades($post['uf']));
     }
@@ -209,5 +207,11 @@ class Usuario extends MY_Controller {
         redirect("home");
     }
 
+    
+    public function uploadImagem(){
+        
+        
+        
+    }
    
 }
