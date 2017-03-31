@@ -33,6 +33,14 @@ class Usuario_model extends CI_Model {
     public function deletaUsuario($usuarioid){
        $this->db->delete('usuario', array('UsuarioId' => $usuarioid));
     }
+    
+    public function atualizaSenhaUsuario($novasenha, $usuarioid){
+       date_default_timezone_set('America/Sao_Paulo');
+       $dados['Atualizacao'] = date('Y-m-d h:i:s', time());
+       $dados['Senha'] = $novasenha;
+       $this->db->where('usuarioid', $usuarioid)->update('usuario', $dados);
+       return $this->db->affected_rows();
+    }
 
 
     
