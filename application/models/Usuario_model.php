@@ -25,7 +25,7 @@ class Usuario_model extends CI_Model {
     
     public function atualizaUsuario($dados, $usuarioid){
         date_default_timezone_set('America/Sao_Paulo');
-        $dados['Atualizacao'] = date('Y-m-d h:i:s', time());
+        $dados['Atualizacao'] = date('Y-m-d H:i:s', time());
         $this->db->where('usuarioid', $usuarioid)->update('usuario', $dados);
         return $this->db->affected_rows();
     }
@@ -36,7 +36,7 @@ class Usuario_model extends CI_Model {
     
     public function atualizaSenhaUsuario($novasenha, $usuarioid){
        date_default_timezone_set('America/Sao_Paulo');
-       $dados['Atualizacao'] = date('Y-m-d h:i:s', time());
+       $dados['Atualizacao'] = date('Y-m-d H:i:s', time());
        $dados['Senha'] = $novasenha;
        $this->db->where('usuarioid', $usuarioid)->update('usuario', $dados);
        return $this->db->affected_rows();

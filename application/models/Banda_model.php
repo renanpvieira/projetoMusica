@@ -9,13 +9,12 @@ class Banda_model extends CI_Model {
     }
     
      public function lstBandas($offset = 0){
-         $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, banda_foto.Nome as foto,  
+         $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, IFNULL(banda_foto.Nome,"bandaBase.jpg") as foto,  
                    (select group_concat(descricao SEPARATOR " - ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
                    (select group_concat(descricao SEPARATOR " - ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
-	               from banda B
-                   inner join banda_foto on banda_foto.bandaid = B.bandaid
-                   where Capa = 1 
-                   LIMIT 10 OFFSET ' . $offset;
+	           from banda B
+                   left join banda_foto on banda_foto.FotoId = B.FotoCapaId';
+                   
 
          return $this->db->query($query)->result_array();
      }
@@ -34,9 +33,7 @@ class Banda_model extends CI_Model {
         
      }
      
-     public function getBandaFotos($bandaid) {
-        return $this->db->get_where('banda_foto', array('bandaid' => $bandaid))->result_array();
-     }
+    
      
      /* TELEFONE */
      public function adicionaTelefone($dados){
@@ -108,19 +105,60 @@ class Banda_model extends CI_Model {
      }
      
      
-     public function getBandaAgenda($bandaid){
-        return $this->db->get_where('banda_agenda', array('bandaid' => $bandaid))->result_array();
+     /* FOTOS */
+     public function insereFoto($dados){
+        $this->db->insert('banda_foto', $dados);
+        return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
      }
      
-     public function getBandaVideos($bandaid){
-        return $this->db->get_where('banda_youtube', array('bandaid' => $bandaid))->result_array();
+     public function getBandaFotos($bandaid) {
+        return $this->db->get_where('banda_foto', array('bandaid' => $bandaid))->result_array();
      }
+     
+     public function DeleteFoto($fotoid, $bandaid){
+        $this->db->delete('banda_foto', array('FotoId' => $fotoid, 'BandaId' => $bandaid));
+        return $this->db->affected_rows();
+     }
+     
+     public function  atualizaCapa($fotoid, $bandaid){
+        $dados = array('FotoCapaId' => $fotoid); 
+        $this->db->where('BandaId', $bandaid)->update('banda', $dados);
+        return $this->db->affected_rows();
+         
+     }
+
+
+     
+     
+     
+     /*public function getBandaAgenda($bandaid){
+        return $this->db->get_where('banda_agenda', array('BandaId' => $bandaid))->result_array();
+     }
+     */
+     
+     /* VIDEOS */
+     public function getBandaVideos($bandaid){
+        return $this->db->get_where('banda_youtube', array('BandaId' => $bandaid))->result_array();
+     }
+     
+     public function DeleteVideo($id, $bandaid){
+        $this->db->delete('banda_youtube', array('BandaYoutubeId' => $id, 'BandaId' => $bandaid));
+        return $this->db->affected_rows();
+     }
+     
+      public function insereVideo($dados){
+        $this->db->insert('banda_youtube', $dados);
+        return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
+     }
+     
+     
+     
+     
      
      public function getBandaComentarios($bandaid){
-        return $this->db->get_where('banda_comentario', array('bandaid' => $bandaid))->result_array();
+        return $this->db->get_where('banda_comentario', array('BandaId' => $bandaid))->result_array();
      }
-     
-     
+        
      
      public function VerificaBanda($usuarioid){
        $res = $this->getBandaUsuario($usuarioid);
@@ -129,8 +167,8 @@ class Banda_model extends CI_Model {
           
      public function atualizaBanda($dados, $usuarioid){
         date_default_timezone_set('America/Sao_Paulo');
-        $dados['Atualizacao'] = date('Y-m-d h:i:s', time()); 
-        $this->db->where('usuarioid', $usuarioid)->update('banda', $dados);
+        $dados['Atualizacao'] = date('Y-m-d H:i:s', time()); 
+        $this->db->where('UsuarioId', $usuarioid)->update('banda', $dados);
         return $this->db->affected_rows();
     }
 

@@ -13,8 +13,9 @@
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
                     
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#configuracoes" aria-controls="configuracoes" role="tab" data-toggle="tab">Configuções</a></li>
+                        <li role="presentation" class="active"><a href="#configuracoes" aria-controls="configuracoes" role="tab" data-toggle="tab">Configurações</a></li>
                         <li role="presentation"><a href="#contatos" aria-controls="contatos" role="tab" data-toggle="tab">Contatos</a></li>
+                        <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Vídeos</a></li>
                         <li role="presentation"><a href="#imagens" aria-controls="imagens" role="tab" data-toggle="tab">Imagens</a></li>
                         <li role="presentation"><a href="#cidades" aria-controls="cidades" role="tab" data-toggle="tab">Cidades</a></li>
                         <li role="presentation"><a href="#estilos" aria-controls="estilos" role="tab" data-toggle="tab">Estilos</a></li>
@@ -173,20 +174,75 @@
                                 </table>
                             </div>
                         </div> <!-- FIM DIV TAB CONTATOS -->
-                        <div role="tabpanel" class="tab-pane" id="imagens">
-                           
-                            <form name="uploadimg" id="contactForm" novalidate="" enctype="multipart/form-data">
+                        
+                        <div role="tabpanel" class="tab-pane" id="videos">
+                            <form name="form-video" id="contactForm" novalidate="">
                                 <div class="row control-group">
-                                    <div class="form-group col-xs-12 floating-label-form-group controls">
-                                        <label for="name">Site</label>
-                                       <input type="file" name="file"  required />
-                                       <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionaimg">
+                                    <div class="form-group col-xs-10 floating-label-form-group controls">
+                                        <label for="name">URL YOUTUBE</label>
+                                        <input type="text" class="form-control" maxlength="255" name="URL" placeholder="Digite uma URL do youtube" /> 
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionafonemsg"></div>
+
+                                    <div class="form-group col-xs-2">
+                                         <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionaVideo">
+                                    </div>
+                                     <div class="row">
+                                        <div class="form-group col-xs-12" id="adicionavideomsg"></div>
                                     </div>
                                 </div>
                             </form>
+                            <br />
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="tabela-video">
+                                <tr>
+                                    <td>URL YOUTUBE</td>
+                                    <td></td>
+                                </tr>
+                                <?php
+                                    if(count($bandavideos) >= 1){
+                                        foreach($bandavideos as $video){
+                                          echo '<tr data-video="' . $video['BandaYoutubeId'] . '" ><td>' . $video['URL'] . '</td><td class="grid-botoes"><input type="button"  data-video="' . $video['BandaYoutubeId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletevideo"></td></tr>';
+                                        }
+                                    }else{
+                                        echo '<tr><td colspan="2">Nenhum vídeo informado!</td></tr>';
+                                    }
+                                ?>
+                                </table>
+                            </div>
+                            
+                        </div> <!-- FIM DIV TAB VIDEOS -->
+                        
+                        <div role="tabpanel" class="tab-pane" id="imagens">
+                           
+                            <form name="form-uploadimg" method="post" id="contactForm" enctype="multipart/form-data" novalidate="" >
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-10 floating-label-form-group controls">
+                                        <input type="file" name="imagemupload" />
+                                    </div>
+                                    <div class="form-group col-xs-2">
+                                       <input type="submit"  class="btn btn-success btn-lg" value="Enviar" name="adicionaimg" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12" id="adicionauploadamsg"></div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <div class="row grid-foto">
+                                <?php
+                                    foreach($bandafotos as $foto){
+                                       echo '<div class="col-sm-6 col-md-3"  data-foto="' . $foto['FotoId'] . '">
+                                                <div class="thumbnail ' . ($foto['Capa'] ? 'fotocapa': '') .  '">
+                                                  <img src="' . base_url('content/imgs/bandas/' . $foto['Nome']) . '" alt="...">
+                                                  <div class="caption">
+                                                      <input type="button" data-foto="' . $foto['FotoId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletefoto">
+                                                      <input type="button" data-foto="' . $foto['FotoId'] . '" class="btn btn-success btn-xs" value="Capa" name="adiconacapa">
+                                                  </div>
+                                                </div>
+                                             </div>';
+                                     }
+                                ?>
+                             </div>
                             
                             
                             
@@ -265,9 +321,5 @@
                     </div> <!-- FIM DIV TAB CONTENTE -->
                 </div>
             </div> <!-- FIM DIV ROW FORM-->
-            
-            
-
-            
         </div><!-- FIM DIV CONTAINER-->
     </section>

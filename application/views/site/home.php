@@ -3,7 +3,7 @@
     <div class="container" id="maincontent" tabindex="-1">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" src="<?php echo base_url('content/imgs/profile.png'); ?>" alt="">
+                <img class="img-responsive" src="<?php echo base_url('content/imgs/site/logo.png'); ?>" alt="">
                 <div class="intro-text">
                     <h1 class="name">Start Bootstrap</h1>
                     <hr class="star-light">
@@ -81,7 +81,7 @@
                                             <p>' . $v['Estilos'] . '</p>
                                         </div>
                                     </div>
-                                    <img src="' . base_url('content/imgs/' . $v['foto']) . '" class="img-responsive" alt="Cabin">
+                                    <img src="' . base_url('content/imgs/bandas/' . $v['foto']) . '" class="img-responsive" alt="Cabin">
                                 </a>
                             </div>';
                    }

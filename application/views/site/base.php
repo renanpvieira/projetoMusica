@@ -65,15 +65,12 @@
     <script  src="<?php echo base_url('content/js/script.js'); ?>"  ></script>
     
     <script>
-        function GeraSecurityForm(form){
+         function GeraSecurityForm(form){
              form[form.length] = { name: "<?php echo $this->security->get_csrf_token_name() ;?>", value: getCookie("<?php echo $this->security->get_csrf_cookie_name() ;?>") };
              return form;
          }
-
+                  
          function Site_Url(url){  return '<?php echo site_url(); ?>' + url; }
-         
-     
-         
     </script>
     
     

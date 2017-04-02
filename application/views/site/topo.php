@@ -81,6 +81,8 @@
         
         select, option {border: none !important; outline: none !important;}
         
+        .fotocapa {  background-color: #455c73 !important;}
+        
     </style>
 
 </head>

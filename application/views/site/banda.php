@@ -95,7 +95,7 @@
                                     <h5>GALERIA DE FOTOS</h5> ';
                                 foreach ($fotos as $f){
                                     echo ' <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                                              <a class="thumbnail" href="#"> <img class="img-responsive" src="' . base_url('content/imgs/' . $f['Nome']) . '" alt=""></a>
+                                              <a class="thumbnail" href="#"> <img class="img-responsive" src="' . base_url('content/imgs/bandas/' . $f['Nome']) . '" alt=""></a>
                                            </div>';
                                 }
                            echo '</div>';

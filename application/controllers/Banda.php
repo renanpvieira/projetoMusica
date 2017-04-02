@@ -27,7 +27,7 @@ class Banda extends MY_Controller {
             $fotos = $this->banda->getBandaFotos($bandaid);
             $telef = $this->banda->getBandaTelefones($bandaid);
             $email = $this->banda->getBandaEmails($bandaid);
-            $agend = $this->banda->getBandaAgenda($bandaid);
+            //$agend = $this->banda->getBandaAgenda($bandaid);
             $video = $this->banda->getBandaVideos($bandaid);
             $comen = $this->banda->getBandaComentarios($bandaid);
                         
@@ -39,7 +39,7 @@ class Banda extends MY_Controller {
             $this->SetDados('fotos', $fotos);
             $this->SetDados('telefones', $telef);
             $this->SetDados('emails', $email);
-            $this->SetDados('agenda', $agend);
+            //$this->SetDados('agenda', $agend);
             $this->SetDados('videos', $video);
             $this->SetDados('comentarios', $comen);
             $this->SetDados('facebook', $face);

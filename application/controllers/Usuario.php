@@ -3,21 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Usuario extends MY_Controller {
 
-    public function __construct()
-    {
+    public function __construct(){
          parent::__construct();
          $this->paginaSegura();
 
          $this->load->helper('form');
-         $this->load->library('upload');
-                  
+                           
          $this->load->model('Banda_model', 'banda');
          $this->load->model('UF_model', 'uf');
          $this->load->model('Usuario_model', 'usuario');
          $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
          
-         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js', 'bandaUpload.js');
+         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js', 'bandaUpload.js', 'bandaYoutube.js');
          $this->SetScript($scripts);
     }
     
@@ -31,6 +29,7 @@ class Usuario extends MY_Controller {
         
         $estilo = $this->estilo->lstEstilos();
         $bandaestilo = $this->banda->getBandaEstilos($banda[0]['BandaId']);
+        $bandafoto = $this->banda->getBandaFotos($banda[0]['BandaId']);
         
         /* MONTANDO O ARRAY DE ESTILOS */
         for($i=0; $i<count($estilo); $i++){
@@ -41,6 +40,11 @@ class Usuario extends MY_Controller {
                }
             }
         }
+        
+        /* VERIFICANDO FOTO CAPA */
+        for($i=0; $i<count($bandafoto); $i++){
+            $bandafoto[$i]['Capa'] = ($bandafoto[$i]['FotoId'] == $banda[0]['FotoCapaId']);    
+        }
                 
         $this->SetDados('bandaLogin', $login);
         $this->SetDados('banda', $banda[0]);
@@ -49,6 +53,8 @@ class Usuario extends MY_Controller {
         $this->SetDados('telefones', $this->banda->getBandaTelefones($banda[0]['BandaId']));
         $this->SetDados('ufs', $this->uf->lstUFs());
         $this->SetDados('bandacidades', $this->banda->getBandaCidades($banda[0]['BandaId']));
+        $this->SetDados('bandafotos', $bandafoto);
+        $this->SetDados('bandavideos', $this->banda->getBandaVideos($banda[0]['BandaId']));
         
         $this->displaySiteAdmin("banda");
     }
@@ -177,6 +183,7 @@ class Usuario extends MY_Controller {
         }
     }
     
+    /* SALVAR ESTILOS */
     public function estilos(){
          $usuarioid = $this->getUsuarioId();  
          $post = $this->input->post();
@@ -197,6 +204,7 @@ class Usuario extends MY_Controller {
          }
      }
 
+    /* USADO NO AUTO COMPLETE DO SELECT-OPTION */
     public function cidades() {
         $post = $this->input->post();
         echo json_encode($this->cidade->lstCidades($post['uf']));
@@ -210,8 +218,128 @@ class Usuario extends MY_Controller {
     
     public function uploadImagem(){
         
+        //sleep(5);
+        /* 600 x 433 */
+        $usuarioid = $this->getUsuarioId();
+                
+        date_default_timezone_set('America/Sao_Paulo');
+        $nome = date('ymdHis', time()) . '-' . $this->getUsuarioId();
+
+        $up['upload_path'] = '.\content\imgs\temp';
+        $up['allowed_types'] = 'jpg|jpeg';
+        $up['max_size']     = '5120'; // EM KB (1MB = 1024 KB / 5 = 5120)
+        $up['max_width'] = '5000';
+        $up['max_height'] = '5000';
+        $up['file_name'] = $nome;
+        $this->load->library('upload', $up);
         
-        
-    }
+        $ret = $this->upload->do_upload('imagemupload');
+        if($ret){
+            $dados = $this->upload->data();
+            $ma['image_library'] = 'gd2';
+            $ma['source_image'] = $dados['full_path'];
+            $ma['create_thumb'] = FALSE;
+            $ma['maintain_ratio'] = FALSE;
+            $ma['quality'] = 100;
    
+            
+            $this->load->library('image_lib', $ma);
+            if($dados['image_width'] < $dados['image_height']){
+               $ma['y_axis'] = intval(($dados['image_height'] - intval((($dados['image_width'] * 433) / 600))) / 2);
+               $ma['height'] = intval((($dados['image_width'] * 433) / 600));
+               $ma['width'] = $dados['image_width'];
+               $this->image_lib->initialize($ma);
+               $ret = $this->image_lib->crop();
+               if(!$ret){
+                   $this->postResult(FALSE, $this->image_lib->display_errors());
+                   die(); /* nao sei se é certo */
+               }
+            }
+            
+            $ma['y_axis'] = 0;
+            $ma['quality'] = 65;
+            $ma['new_image']  = '.\content\imgs\bandas';
+            $ma['width']   = 600;
+            $ma['height']  = 433;
+            $this->image_lib->initialize($ma);
+            $ret = $this->image_lib->resize();
+            if($ret){
+                $banda = $this->banda->getBandaUsuario($usuarioid);
+                $insert = array('BandaId' => $banda[0]['BandaId'], 'Nome' => $dados['orig_name']);
+                $ret = $this->banda->insereFoto($insert);
+                if($ret >= 1){
+                    $img = base_url('content/imgs/bandas/' . $dados['orig_name']);
+                    $this->postResult(TRUE, $ret, $img);
+                } else {
+                    $this->postResult(FALSE, "<p>Houve um problema ao adicionar essa cidade! Tente mais tarde!</p>");
+                }
+            }else{
+                $this->postResult(FALSE, $this->image_lib->display_errors());
+            }
+        }else{
+            $this->postResult(FALSE, $this->upload->display_errors());
+        }
+    }
+       
+    public function deletaFoto() {
+        $usuarioid = $this->getUsuarioId();
+        $post = $this->input->post();
+        $banda = $this->banda->getBandaUsuario($usuarioid); // SOMENTE PARA NAO CORRER O RISCO DE DELETE UM REGISTRO ERRADO
+        echo $this->banda->DeleteFoto($post['FotoId'], $banda[0]['BandaId']);
+    }
+    
+    public function adiconaCapa() {
+       $usuarioid = $this->getUsuarioId();
+       $post = $this->input->post();
+       $banda = $this->banda->getBandaUsuario($usuarioid); // SOMENTE PARA NAO CORRER O RISCO DE DELETE UM REGISTRO ERRADO
+       echo $this->banda->atualizaCapa($post['FotoId'], $banda[0]['BandaId']);
+    }
+        
+    public function deletaVideo() {
+        $usuarioid = $this->getUsuarioId();
+        $post = $this->input->post();
+        $banda = $this->banda->getBandaUsuario($usuarioid); // SOMENTE PARA NAO CORRER O RISCO DE DELETE UM REGISTRO ERRADO
+        echo $this->banda->DeleteVideo($post['BandaYoutubeId'], $banda[0]['BandaId']);
+    }
+    
+    public function adicionaVideo() {
+        $usuarioid = $this->getUsuarioId();
+        $post = $this->input->post();
+        
+        $this->form_validation->set_rules('URL', 'URL', 'trim|required|min_length[10]|max_length[255]');
+        if ($this->form_validation->run())
+        {
+            $post['URL'] = str_replace("watch?v=", "embed/", $post['URL']);  
+            $banda = $this->banda->getBandaUsuario($usuarioid);
+            $post['BandaId'] = $banda[0]['BandaId'];
+            $ret = $this->banda->insereVideo($post);
+            if($ret >= 1){
+                $this->postResult(TRUE, $ret);
+            } else {
+                $this->postResult(FALSE, "<p>Houve um problema ao adicionar esse novo telefone! Tente mais tarde!</p>");
+            }
+        }else{
+            $this->postResult(FALSE, validation_errors());
+        }
+    }
+    
 }
+
+
+/*
+ * {"file_name":"170331224219-1.jpg",
+ * "file_type":"image\/jpeg",
+ * "file_path":"C:\/wamp64\/www\/projetoMusica\/content\/imgs\/temp\/",
+ * "full_path":"C:\/wamp64\/www\/projetoMusica\/content\/imgs\/temp\/170331224219-1.jpg",
+ * "raw_name":"170331224219-1",
+ * "orig_name":"170331224219-1.jpg",
+ * "client_name":"teste.jpg",
+ * "file_ext":".jpg",
+ * "file_size":200.05,
+ * "is_image":true,
+ * "image_width":1080,
+ * "image_height":800,
+ * "image_type":"jpeg",
+ * "image_size_str":"width=\"1080\" height=\"800\""}
+ */
+

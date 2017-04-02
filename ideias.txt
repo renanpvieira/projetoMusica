@@ -12,3 +12,8 @@ fale um pouco sobre a banda.. (foi)
 precisa snitizar a url do youtube 
 https://www.youtube.com/watch?v=ZHoLaLlL5lA
 https://www.youtube.com/embed/ZHoLaLlL5lA
+
+
+fazer um jobs que verifica se o cara ainda nao tem foto principal 
+se nao tiver escolhe uma foto qualquer dele e coloca com principal
+e manda uma mnsagem para o cara
