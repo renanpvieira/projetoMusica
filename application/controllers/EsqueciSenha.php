@@ -14,7 +14,7 @@ class EsqueciSenha extends MY_Controller {
         13 => array('qqnlp' => 'img013.jpg'),        14 => array('nk7d4' => 'img014.jpg'),
         15 => array('xt17y' => 'img015.jpg'),        16 => array('748em' => 'img016.jpg'),
         17 => array('ak8lw' => 'img017.jpg'),        18 => array('7pfq7' => 'img018.jpg'),
-        16 => array('m2vkl' => 'img019.jpg'),        20 => array('iulit' => 'img020.jpg'),
+        19 => array('m2vkl' => 'img019.jpg'),        20 => array('iulit' => 'img020.jpg'),
         21 => array('fs9md' => 'img021.jpg'),        22 => array('8hvir' => 'img022.jpg'),
         23 => array('7uvw2' => 'img023.jpg'),        24 => array('p3qzb' => 'img024.jpg'),
         25 => array('unptd' => 'img025.jpg'),        26 => array('c594n' => 'img026.jpg'),
@@ -27,6 +27,15 @@ class EsqueciSenha extends MY_Controller {
         39 => array('468l3' => 'img039.jpg'),        40 => array('7f2m3' => 'img040.jpg')
     );
     
+    private function geraChave(){
+        $chave = "";
+        for($i=0; $i<15; $i++){
+          $chave = $chave . chr(rand(97, 122));
+        }
+        return $chave;
+    }
+
+
     public function __construct()
     {
          parent::__construct();
@@ -34,7 +43,7 @@ class EsqueciSenha extends MY_Controller {
          $this->load->library('session');
          $this->load->model('Usuario_model', 'usuario');
          //$this->load->model('Banda_model', 'banda');
-         //$this->load->library('email');
+         $this->load->library('email');
          
 
          $scripts = Array('esquecisenha.js');
@@ -43,11 +52,8 @@ class EsqueciSenha extends MY_Controller {
     
     public function teste()
     {
-        //$this->session->set_tempdata('recuperasenha', 'dddd', 10800);
-       // $this->session->unset_tempdata('recuperasenha');
-        
-        //$d = array("BandaId" => 1, "DDD" => "21", "Numero" => "0000");
-        //echo $this->banda->adicionaTelefone($d);
+      
+        echo $this->geraChave();
     }
     
     
@@ -64,11 +70,21 @@ class EsqueciSenha extends MY_Controller {
         $this->displaySite('esquecisenha');
     }
     
-    public function kkkkk()
+    public function xx()
     {
+        //$dados = array('UsuarioId' => 1, 'Chave' => $this->geraChave(), 'Data' => time());
+        //$this->usuario->insereRecupera($dados);
+         //echo $this->geraChave();
+        $res = $this->usuario->VerificaUsuario($post['Login']);
+        echo count($this->usuario->getRecupera($res['UsuarioId']));
+        
+        
+        
+        
+        
         //$this->session->set_tempdata('recuperasenha', 'dddd', 10800);
        // $this->session->unset_tempdata('recuperasenha');
-        echo base64_encode($this->encryption->encrypt('t@t.com'));
+        //echo base64_encode($this->encryption->encrypt('t@t.com'));
     }
     
     public function novasenha($mail)
@@ -87,6 +103,10 @@ class EsqueciSenha extends MY_Controller {
 
     public function enviar()
     {
+        
+        
+
+        
         $post = $this->input->post();
         $this->form_validation->set_rules('Login', 'Login', 'trim|required|min_length[6]|max_length[255]|valid_email');
         $this->form_validation->set_rules('Imagem', 'Imagem', 'trim|required|min_length[3]|max_length[8]|alpha_numeric');
@@ -96,32 +116,42 @@ class EsqueciSenha extends MY_Controller {
             {
                 $res = $this->usuario->VerificaUsuario($post['Login']);
                 if(count($res) == 1){
+                       
+                    $qtd = count($this->usuario->getRecupera($res[0]['UsuarioId']));
+                    if($qtd >= 3){
+                        $this->postResult(FALSE, "<p>Você já enviou sua senha 3 vezes, por favor tente novamente em 4 horas!</p>"); // sem acento por causa do json
+                        die();
+                    }
                     
-                                        
+                    $chave = $this->geraChave();
+                    $dados = array('UsuarioId' => $res[0]['UsuarioId'], 'Chave' => $chave, 'DataHora' => time());
+                    $this->usuario->insereRecupera($dados);
                     
-                    /* GERANDO A MINI SESSAO */
-                    $this->session->set_tempdata('recuperasenha', $this->encryption->encrypt($post['Login']), 10800); /*3 horas*/
+                    $this->postResult(FALSE, "<p>Foi</p>"); // sem acento por causa do json
+                    die();
+        
                     
                     
-                    /* ENVIANDO EMAIL*/ /*
+                    
+                    
+                    /* ENVIANDO EMAIL*/
                     $config['protocol'] = 'smtp';
                     $config['charset'] = 'iso-8859-1';
-                    $config['smtp_host'] = 'smtp.gmail.com';
-                    $config['smtp_port'] = '25';
+                    $config['smtp_host'] = 'ssl://smtp.googlemail.com';
+                    $config['smtp_port'] = '465';
                     $config['smtp_user'] = 'renanvieira@id.uff.br';
                     $config['smtp_pass'] = 'z9d3n7s9';
+                    $config['mailtype'] = 'html';
                     $this->email->initialize($config);
-                                        
+                    
+                    $this->email->set_newline("\r\n");
                     $this->email->from('renanvieira@id.uff.br', 'Renan Vieira');
                     $this->email->to('renanpvieira25@hotmail.com');
                     $this->email->subject('XXXX');
                     $this->email->message('YYYY');
-                    $ret = $this->email->send();*/
+                    $ret = $this->email->send();
                     
-                    
-                    
-                    
-                    if(TRUE){
+                    if($ret){
                       $this->postResult(TRUE, "<p>Foi enviado uma mensagem com instrucoes para o e-mail " . $post['Login'] . "</p>");  
                     }else{
                       $this->postResult(FALSE, "<p>Ops! tvemos um problema ao enviar o e-mail, tente mais tarde!</p>"); 
@@ -133,7 +163,7 @@ class EsqueciSenha extends MY_Controller {
                $this->postResult(FALSE, "<p>voce precisa digitar o texto que esta na imagem corretamente!</p>");
             }
         }else{
-          $this->postResult(FALSE, validation_errors(), 'esquecisenha');
+          $this->postResult(FALSE, validation_errors(), 'esquecisenha'); 
         }
   }
 

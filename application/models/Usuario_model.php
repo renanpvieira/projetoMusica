@@ -12,6 +12,24 @@ class Usuario_model extends CI_Model {
     public function VerificaUsuario($login){
        return $this->db->get_where('usuario', array('login' => $login))->result_array();
     }
+    
+    public function VerificaRecupera($login){
+       return $this->db->get_where('usuario', array('login' => $login))->result_array();
+    }
+    
+    public function insereRecupera($dados){
+        $this->db->insert('recupera_senha', $dados);
+        if($this->db->affected_rows() == 1){
+         return $this->db->insert_id();
+       }else{
+         return 0; 
+       }
+    }
+    
+    public function getRecupera($id){
+        $time = time() - 10800;
+        return $this->db->get_where('recupera_senha', array('UsuarioId' => $id, 'DataHora >' => $time))->result_array();
+    }
       
 
     public function insereUsuario($dados){
