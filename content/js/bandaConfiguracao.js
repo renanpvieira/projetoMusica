@@ -10,16 +10,10 @@ $(document).ready(function () {
     $("#divpreco").addClass("floating-label-form-group-with-value");
     $("#divsobre").addClass("floating-label-form-group-with-value");
     $("#divexperiencia").addClass("floating-label-form-group-with-value");
-    
-    
-    
         
     var preco = $("input[name='Preco']").val();
     if(preco == 0){ $("input[name='Preco']").val('A combinar'); }
     
-    
-    
-   
     $("input[name='Configuracao']").click(function () {
         var form = $("form[name='Configuracao']").serializeArray();
         
@@ -29,6 +23,9 @@ $(document).ready(function () {
             data: GeraSecurityForm(form),
             success: function (data) {
                 var ret = $.parseJSON(data);
+                if(ret.formValidate){
+                    $('#nome-banda-conf').html($('input[name="Nome"]').val()); /* ATUALIZANDO O NOME DO TOPO */
+                }
                 displayFormMsg("#configuracaomsg", ret.msg);
             }
         });

@@ -32,6 +32,7 @@ class TrocaSenha extends MY_Controller {
            
             $res = $this->usuario->atualizaSenhaUsuario($novasenha, $usuarioid);
             if($res == 1){
+                $this->atualizaUsuarioSessao('Estatus', 1); /* Estatus ativo */
                 $this->postResult(TRUE, "<p>Senha alterada com sucesso!</p>"); 
             }else{
                 $this->postResult(FALSE, "<p>Não foi possível realizar essa operação! Tente mais tarde!</p>"); 

@@ -34,20 +34,20 @@ class Cadastro extends MY_Controller {
                  * Enviar e-mail para troca de senha
                  *                  
                  */
-               $this->postResult(FALSE, "<p>Esse e-mail jÃ¡ esta cadastrado! Acabamos de enviar uma mensagem com as instruÃ§Ãµes para troca de senha!</p>");
+               $this->postResult(FALSE, "<p>Esse e-mail já esta cadastrado! Acabamos de enviar uma mensagem com as instruçõees para troca de senha!</p>");
             }else{
-                $dados = array('Login' => $post['Login'], 'Senha' => 'n0v0c@dastro');
+                $dados = array('Login' => $post['Login'], 'Senha' => 'n0v0c@dastro', 'Estatus' => 0);
                 $res = $this->usuario->insereUsuario($dados);
                 unset($dados);
                 if($res >= 1){
-                    $dados = array('Nome' => $post['Nome'], 'UsuarioId' => $res, 'Estatus' => 0);
+                    $dados = array('Nome' => $post['Nome'], 'UsuarioId' => $res);
                     $res = $this->banda->insereBandaBasico($dados);
                     if($res >= 1){
                         /*  
                          * Envia E-mail
                          *  
                          */
-                        $this->postResult(FALSE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruÃ§Ãµes para finalizar seu cadasto.</p>");
+                        $this->postResult(FALSE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruõees para finalizar seu cadasto.</p>");
                         
                     }else{
                         $this->postResult(FALSE, "<p>Houve um problema ao fazer seu cadastro! Tente mais tarde!</p>");   
@@ -130,11 +130,11 @@ class Cadastro extends MY_Controller {
 
                             }else{
                                 $this->usuario->deletaUsuario($res); 
-                                $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>"); 
+                                $this->postResult(FALSE, "<p>Não foi possivel fazer o cadastro, tente mais tarde!</p>"); 
                                                                  }
 							
                         }else{ //InsereUsuario
-                           $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>"); 
+                           $this->postResult(FALSE, "<p>Não foi possivel fazer o cadastro, tente mais tarde!</p>"); 
                         }
 						
                  }else{ //Senhas iguais
@@ -196,10 +196,10 @@ class Cadastro extends MY_Controller {
                            $this->postResult(TRUE, "", site_url("/usuario/contratante/" . $res[0]['UsuarioId']));
                         }else{
                            $this->usuario->deletaUsuario($res); 
-                           $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>");    
+                           $this->postResult(FALSE, "<p>Não foi possivel fazer o cadastro, tente mais tarde!</p>");    
                         }
                      }else{
-                        $this->postResult(FALSE, "<p>N�o foi possivel fazer o cadastro, tente mais tarde!</p>"); 
+                        $this->postResult(FALSE, "<p>Não foi possivel fazer o cadastro, tente mais tarde!</p>"); 
                      }
                 }else{
                    $this->postResult(FALSE, "<p>Voce precisa digitar senhas iguais!</p>"); 

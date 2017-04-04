@@ -19,6 +19,15 @@ class MY_Controller extends CI_Controller {
            $url = site_url('login');
            redirect($url);
        }
+       
+       /* FORÇANDO O USUARIO A TROCAR A SENHA */
+       if(strpos(strtolower($_SERVER['REQUEST_URI']), 'trocasenha') == false){
+           $sessao = json_decode($this->encryption->decrypt($this->session->userdata('musica_proj')), True);
+           if($sessao['Estatus'] == 0){
+               $url = site_url('trocasenha');
+               redirect($url);
+           }
+       }
     }
     
      public function estaLogado(){
@@ -44,6 +53,20 @@ class MY_Controller extends CI_Controller {
            return $sessao['Login'];
        }
     }
+    
+    public function atualizaUsuarioSessao($campo, $valor){
+       $url = site_url('login');
+       if(!$this->session->has_userdata('musica_proj')){
+           redirect($url);
+       }else{
+           $sessao = json_decode($this->encryption->decrypt($this->session->userdata('musica_proj')), True);
+           $sessao[$campo] = $valor;
+           $this->session->set_userdata('musica_proj', $this->encryption->encrypt(json_encode($sessao)));
+       }
+    }
+    
+    
+    
 
     /*
     public function verificaUsuario($usuarioid){

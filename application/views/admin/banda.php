@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2><?php echo $banda['Nome']; ?></h2>
+                    <h2 id="nome-banda-conf"><?php echo $banda['Nome']; ?></h2>
                     <hr class="star-primary">
                 </div>
             </div>

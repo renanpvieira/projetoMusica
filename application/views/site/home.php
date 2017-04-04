@@ -5,7 +5,7 @@
             <div class="col-lg-12">
                 <img class="img-responsive" src="<?php echo base_url('content/imgs/site/logo.png'); ?>" alt="">
                 <div class="intro-text">
-                    <h1 class="name">Start Bootstrap</h1>
+                    <h1 class="name"><?php echo $this->config->item('nome'); ?></h1>
                     <hr class="star-light">
                     <span class="skills">Encontre o som que você precisa</span>
                 </div>

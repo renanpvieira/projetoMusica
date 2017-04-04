@@ -19,8 +19,10 @@
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
-                        <h3>Sobre o Toca pra mim</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com/">Start Bootstrap</a>.</p>
+                        <h3>Sobre o <?php echo $this->config->item('nome'); ?></h3>
+                        <p>Tempo {elapsed_time} seconds. </p>
+                        <p>Versao <?php echo  (ENVIRONMENT === 'development') ?  CI_VERSION : '' ?></p>
+                        <p>memoria {memory_usage} </p>
                     </div>
                 </div>
             </div>

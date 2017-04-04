@@ -83,9 +83,13 @@ class Usuario extends MY_Controller {
             $dados = array('Login' => $post['Login']);
             $ret = $this->usuario->atualizaUsuario($dados, $usuarioid);
             if($ret == 1){
+                
+                   $this->atualizaUsuarioSessao('Login', $post['Login']);
+                
                    unset($dados);
                    unset($post['Login']);
                    $ret = 0;
+                   
                    $ret = $this->banda->atualizaBanda($post, $usuarioid);
                    if($ret == 1){
                        $this->postResult(TRUE, "<p>Atualização salva com sucesso!</p>");

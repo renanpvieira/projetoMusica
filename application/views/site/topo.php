@@ -105,7 +105,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span><i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="<?php echo site_url('home'); ?>">TOCA PRA MIM</a>
+                <a class="navbar-brand" href="<?php echo site_url('home'); ?>"><?php echo $this->config->item('nome'); ?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
