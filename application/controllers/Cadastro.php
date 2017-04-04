@@ -5,8 +5,10 @@ class Cadastro extends MY_Controller {
 
     public function __construct()
     {
+        date_default_timezone_set('America/Sao_Paulo');
         parent::__construct();
         $this->load->helper('form');
+        $this->load->library('email');
 
         $this->load->model('Usuario_model', 'usuario');
         $this->load->model('Banda_model', 'banda');
@@ -22,6 +24,7 @@ class Cadastro extends MY_Controller {
     }
     
     public function cadastroBasico(){
+        
         $post = $this->input->post();
         $this->form_validation->set_rules('Login', 'E-mail', 'trim|required|min_length[6]|max_length[255]|valid_email');
         $this->form_validation->set_rules('Nome', 'Nome', 'trim|required|min_length[6]|max_length[255]|alpha_numeric_spaces');
@@ -37,17 +40,36 @@ class Cadastro extends MY_Controller {
                $this->postResult(FALSE, "<p>Esse e-mail já esta cadastrado! Acabamos de enviar uma mensagem com as instruçõees para troca de senha!</p>");
             }else{
                 $dados = array('Login' => $post['Login'], 'Senha' => 'n0v0c@dastro', 'Estatus' => 0);
-                $res = $this->usuario->insereUsuario($dados);
+                //$res = $this->usuario->insereUsuario($dados);
+                $res = 1;
                 unset($dados);
                 if($res >= 1){
                     $dados = array('Nome' => $post['Nome'], 'UsuarioId' => $res);
-                    $res = $this->banda->insereBandaBasico($dados);
-                    if($res >= 1){
-                        /*  
-                         * Envia E-mail
-                         *  
-                         */
-                        $this->postResult(FALSE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruõees para finalizar seu cadasto.</p>");
+                    //$ret = $this->banda->insereBandaBasico($dados);
+                    $ret = 1;
+                    if($ret >= 1){
+                        
+                         $this->postResult(TRUE, "dd");
+                         die();
+                        
+                        $chave = $this->geraChave();
+                        date_default_timezone_set('America/Sao_Paulo');
+                        $dados = array('UsuarioId' => $res, 'Chave' => $chave, 'DataHora' => time());
+                        $this->usuario->insereRecupera($dados);
+                        
+                        /*
+                        $url = 'esquecisenha/novasenha/' . $chave;
+                        $msg = '<a href="' . site_url($url)  . '"> clique aqui </a>';
+                        
+                        $this->email->initialize($this->config->item('email'));
+                        $this->email->set_newline("\r\n");
+                        $this->email->from($this->config->item('emailfrom'), $this->config->item('emailfromnome'));
+                        $this->email->to($post['Login']);
+                        $this->email->subject($this->config->item('mailCadastroAssunto'));
+                        $this->email->message($msg);
+                        */
+                        
+                        $this->postResult(TRUE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruõees para finalizar seu cadasto.</p>");
                         
                     }else{
                         $this->postResult(FALSE, "<p>Houve um problema ao fazer seu cadastro! Tente mais tarde!</p>");   
@@ -59,8 +81,6 @@ class Cadastro extends MY_Controller {
         }else{
            $this->postResult(FALSE, validation_errors());
         }
-        
-        
     }
 
     /* DESCONTINUADO */

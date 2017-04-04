@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    /*
     $('input[type=checkbox]').click(function () {
         if ($(this).attr('data') == 'uf') {
             var json = new Array();
@@ -32,6 +33,19 @@ $(document).ready(function () {
 
 
 
+        }
+    });
+    */
+   
+   var pagina = 0;
+   
+   function carregaBandas(){
+       
+   }
+    
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            alert("bottom!");
         }
     });
 
