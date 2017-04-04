@@ -9,15 +9,61 @@ class Cadastro extends MY_Controller {
         $this->load->helper('form');
 
         $this->load->model('Usuario_model', 'usuario');
-        $this->load->model('Cliente_model', 'cliente');
+        $this->load->model('Banda_model', 'banda');
+	        
+        $scripts = Array('cadastroBasico.js');
+	$this->SetScript($scripts);
     }
        
 
     public function index()
     {
-     $this->displaySite('cadastroSelecioneTipo');
+      $this->displaySite('cadastroBasico');
+    }
+    
+    public function cadastroBasico(){
+        $post = $this->input->post();
+        $this->form_validation->set_rules('Login', 'E-mail', 'trim|required|min_length[6]|max_length[255]|valid_email');
+        $this->form_validation->set_rules('Nome', 'Nome', 'trim|required|min_length[6]|max_length[255]|alpha_numeric_spaces');
+
+        if ($this->form_validation->run())
+        {
+            $res = $this->usuario->VerificaUsuario($post['Login']);
+            if(count($res) >= 1){
+                 /*
+                 * Enviar e-mail para troca de senha
+                 *                  
+                 */
+               $this->postResult(FALSE, "<p>Esse e-mail jÃ¡ esta cadastrado! Acabamos de enviar uma mensagem com as instruÃ§Ãµes para troca de senha!</p>");
+            }else{
+                $dados = array('Login' => $post['Login'], 'Senha' => 'n0v0c@dastro');
+                $res = $this->usuario->insereUsuario($dados);
+                unset($dados);
+                if($res >= 1){
+                    $dados = array('Nome' => $post['Nome'], 'UsuarioId' => $res, 'Estatus' => 0);
+                    $res = $this->banda->insereBandaBasico($dados);
+                    if($res >= 1){
+                        /*  
+                         * Envia E-mail
+                         *  
+                         */
+                        $this->postResult(FALSE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruÃ§Ãµes para finalizar seu cadasto.</p>");
+                        
+                    }else{
+                        $this->postResult(FALSE, "<p>Houve um problema ao fazer seu cadastro! Tente mais tarde!</p>");   
+                    }
+                }else{
+                  $this->postResult(FALSE, "<p>Houve um problema ao fazer seu cadastro! Tente mais tarde!</p>");   
+                }
+            }
+        }else{
+           $this->postResult(FALSE, validation_errors());
+        }
+        
+        
     }
 
+    /* DESCONTINUADO */
     public function cadastroBanda()
     {
       $this->load->model('Banda_model', 'banda');
@@ -28,7 +74,7 @@ class Cadastro extends MY_Controller {
       $this->displaySite('cadastroBanda');
     }
     
-    
+    /* DESCONTINUADO */
     public function cadastrarBanda()
     {
 		
@@ -104,10 +150,7 @@ class Cadastro extends MY_Controller {
             }       
     }
     
-    
-    
-    
-
+    /* DESCONTINUADO */
     public function cadastroCliente()
 	{
          $scripts = Array('cadastroCliente.js');
@@ -116,7 +159,7 @@ class Cadastro extends MY_Controller {
          $this->displaySite('cadastroCliente');
     }
 
-    
+    /* DESCONTINUADO */
     public function cadastrarCliente()
 	{
         

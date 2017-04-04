@@ -14,31 +14,42 @@
     </div>
 </header>
 
-<!-- Contact Section -->
-<section id="contact">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                <form name="login" id="contactForm" novalidate="">
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="name">Login ou E-mail</label>
-                            <input type="text" class="form-control" maxlength="255" name="Login" placeholder="Login / E-mail" /> 
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 ">
+            <h5>Faça sua pesquisa</h5> 
+            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+            <form name="login" id="contactForm" novalidate="">
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls noborder">
+                        <!--
+                        <label for="name">Digite sua busca</label>
+                        <input type="text" class="form-control" maxlength="255" name="Login" placeholder="Ex: Samba Pagode NiterÃ³i" /> 
+                        <div class="input-group-addon">.00</div>
+                        -->
+                        <div class="input-group input-buscar">
+                          <label for="name">Digite sua busca</label>
+                          <input type="text" class="form-control form-group col-xs-10 controls"  placeholder="Ex: Samba Pagode Niterói">
+                          <div class="input-group-addon verde">
+                             <input type="button"  class="btn btn-success btn-lg" value="Pesquisar" name="Enviar">
+                          </div>
                         </div>
+                        
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="form-group col-xs-8">
-                            <input type="button"  class="btn btn-success btn-lg" value="Buscar" name="Enviar">
-                        </div>
+                    <!--
+                     <div class="form-group col-xs-2">
+                        <input type="button"  class="btn btn-success btn-lg" value="Buscar" name="Enviar">
                     </div>
-                </form>
-            </div>
+                    -->
+                </div>
+            </form>
+            <a href="#">Busca avançada</a>
         </div>
     </div>
-</section>
+</div>
 
 
 <?php

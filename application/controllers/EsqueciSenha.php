@@ -35,7 +35,6 @@ class EsqueciSenha extends MY_Controller {
         return $chave;
     }
 
-
     public function __construct()
     {
          parent::__construct();
@@ -49,16 +48,7 @@ class EsqueciSenha extends MY_Controller {
          $scripts = Array('esquecisenha.js');
          $this->SetScript($scripts);
     }
-    
-    public function teste()
-    {
-      
-        echo $this->geraChave();
-    }
-    
-    
-      
-
+   
     public function index()
     {
         $rand = rand (1, count($this->capt));
@@ -70,42 +60,34 @@ class EsqueciSenha extends MY_Controller {
         $this->displaySite('esquecisenha');
     }
     
-    public function xx()
+    public function novasenha($chave)
     {
-        //$dados = array('UsuarioId' => 1, 'Chave' => $this->geraChave(), 'Data' => time());
-        //$this->usuario->insereRecupera($dados);
-         //echo $this->geraChave();
-        $res = $this->usuario->VerificaUsuario($post['Login']);
-        echo count($this->usuario->getRecupera($res['UsuarioId']));
-        
-        
-        
-        
-        
-        //$this->session->set_tempdata('recuperasenha', 'dddd', 10800);
-       // $this->session->unset_tempdata('recuperasenha');
-        //echo base64_encode($this->encryption->encrypt('t@t.com'));
-    }
-    
-    public function novasenha($mail)
-    {
-        $rec = $this->session->tempdata('recuperasenha');
-        
-        if(isset($rec)){
-         
-            echo 'ff';
-        }else{
-            
-            echo 'dd';
+        if(strlen($chave) != 15){
+            redirect('home');
         }
+        
+        $ret = $this->usuario->VerificaChaveUsuario($chave);
+        if(count($ret) != 1){
+           redirect('home');
+        }
+               
+        $tempo = time() - $ret[0]['DataHora']; 
+        if($tempo > 21600){ //6 horas
+            $this->usuario->DeleteChaveUsuario($chave, $ret[0]['UsuarioId']);
+            redirect('home');
+        }
+                
+        $res = $this->usuario->getUsuario($ret[0]['UsuarioId']);
+        $this->session->set_userdata('musica_proj', $this->encryption->encrypt(json_encode($res[0])));
+        $this->usuario->DeleteChaveUsuario($chave, $ret[0]['UsuarioId']);
+                
+        unset($ret, $res);
+        redirect('trocasenha');
         
     }
 
     public function enviar()
     {
-        
-        
-
         
         $post = $this->input->post();
         $this->form_validation->set_rules('Login', 'Login', 'trim|required|min_length[6]|max_length[255]|valid_email');
@@ -119,7 +101,7 @@ class EsqueciSenha extends MY_Controller {
                        
                     $qtd = count($this->usuario->getRecupera($res[0]['UsuarioId']));
                     if($qtd >= 3){
-                        $this->postResult(FALSE, "<p>Você já enviou sua senha 3 vezes, por favor tente novamente em 4 horas!</p>"); // sem acento por causa do json
+                        $this->postResult(FALSE, "<p>Você ja enviou sua senha 3 vezes, por favor tente novamente em 4 horas!</p>"); // sem acento por causa do json
                         die();
                     }
                     
@@ -127,12 +109,8 @@ class EsqueciSenha extends MY_Controller {
                     $dados = array('UsuarioId' => $res[0]['UsuarioId'], 'Chave' => $chave, 'DataHora' => time());
                     $this->usuario->insereRecupera($dados);
                     
-                    $this->postResult(FALSE, "<p>Foi</p>"); // sem acento por causa do json
-                    die();
-        
-                    
-                    
-                    
+                    $url = 'esquecisenha/novasenha/' . $chave;
+                    $msg = '<a href="' . site_url($url)  . '"> clique aqui </a>';
                     
                     /* ENVIANDO EMAIL*/
                     $config['protocol'] = 'smtp';
@@ -148,8 +126,8 @@ class EsqueciSenha extends MY_Controller {
                     $this->email->from('renanvieira@id.uff.br', 'Renan Vieira');
                     $this->email->to('renanpvieira25@hotmail.com');
                     $this->email->subject('XXXX');
-                    $this->email->message('YYYY');
-                    $ret = $this->email->send();
+                    $this->email->message($msg);
+                    //$ret = $this->email->send();
                     
                     if($ret){
                       $this->postResult(TRUE, "<p>Foi enviado uma mensagem com instrucoes para o e-mail " . $post['Login'] . "</p>");  

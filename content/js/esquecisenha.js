@@ -7,18 +7,11 @@ $(document).ready(function () {
             url: Site_Url("/esquecisenha/enviar"),
             data: GeraSecurityForm(form),
             success: function (data) {
-                
-                alert(data);
-                /*var ret = $.parseJSON(data);
-                if (ret.formValidate) {
-                    window.location = ret.url;
-                } else {
-                    displayFormMsg("#esquecisenha", ret.msg);
-                    //window.location = ret.url;
-                }
-                */
+                var ret = $.parseJSON(data);
+                displayFormMsg("#esquecisenha", ret.msg);
             }
         });
     });
 });
+
 

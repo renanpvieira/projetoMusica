@@ -82,6 +82,11 @@
         select, option {border: none !important; outline: none !important;}
         
         .fotocapa {  background-color: #455c73 !important;}
+        /* input busca */
+        .noborder {border:none !important;}
+        .input-buscar {border: 1px solid #eee; padding-left:10px;}
+        .verde {background-color: #18BC9C; }
+        .verde:hover {background-color: #128F76; }
         
     </style>
 
