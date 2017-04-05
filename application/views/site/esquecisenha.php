@@ -27,7 +27,7 @@
                                 <input type="text" class="form-control" maxlength="12" name="Imagem" placeholder="Digite o texto na imagem" /> 
                             </div>
                             <div class="form-group col-xs-7">
-                                <img src="<?php  echo $image; ?>" />
+                                <img id="imgcaptch" src="<?php  echo $image; ?>" />
                             </div>
                         </div>
                         <br />
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-xs-12" id="esquecisenha"></div>
+                            <div class="form-group col-xs-12 form-msg" id="esquecisenha"></div>
                         </div>
                     </form>
                 </div>

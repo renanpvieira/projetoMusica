@@ -16,9 +16,8 @@ $(document).ready(function () {
         })
         .done(function(data) {
             var ret = $.parseJSON(data);
-            if (!ret.formValidate) {
-               displayFormMsg("#estilomsg", ret.msg);
-            } 
+            displayFormMsg(ret.formValidate, "#estilomsg", ret.msg);
+             
         })
         .always(function() {
             btn.disabled = false;

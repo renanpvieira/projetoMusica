@@ -14,11 +14,19 @@ function getCookie(cname) {
     return "";
 }
 
-function displayFormMsg(div, msg) {
+function displayFormMsg(valid, div, msg) {
+    
+    if(valid){
+        $(div).css('background-color', '#d9edf7');
+    }else{
+        $(div).css('background-color', '#f2dede');
+    }
+        
     $(div).html('');
     $(div).append(msg);
-
+    
     $(div).delay(1500).fadeOut(2000, function () {
+        $(div).css('background-color', 'white');
         $(div).html('');
         $(div).fadeIn(1);
     });

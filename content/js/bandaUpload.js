@@ -47,7 +47,7 @@ $(document).ready(function () {
                 $('div.grid-foto').append(divPrincipal);
           
             }else{
-             displayFormMsg("#adicionauploadamsg", ret.msg);
+             displayFormMsg(ret.formValidate, "#adicionauploadamsg", ret.msg);
            } 
         });
      }));

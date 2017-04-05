@@ -58,7 +58,7 @@
         
         //hr.star-primary:after{content: "\f001" !important; }
         
-        #loginmsg {color:red;}
+        
         
         /* PAG BANDA */
         p.banda-sobre {font-size: 17px; color:#8c8c8c; text-align: center;   }
@@ -80,13 +80,17 @@
         .tab-content{padding:20px}
         
         select, option {border: none !important; outline: none !important;}
-        
         .fotocapa {  background-color: #455c73 !important;}
+        
         /* input busca */
         .noborder {border:none !important;}
         .input-buscar {border: 1px solid #eee; padding-left:10px;}
         .verde {background-color: #18BC9C; }
         .verde:hover {background-color: #128F76; }
+        
+        div.form-msg {color:#a94442; background-color: white; border: none; padding-top: 10px; }
+        div.form-msg > p {font-size: 16px !important; }
+        div.form-msg > p.sucesso-msg {color: #31708f !important; }
         
     </style>
 

@@ -108,6 +108,15 @@ class MY_Controller extends CI_Controller {
     public function postResult($formValidate, $msg, $url = NULL){
        echo json_encode(array('formValidate' => $formValidate, 'msg' => $msg, 'url' => $url));
     }
+    
+    
+    public function geraChave(){
+        $chave = "";
+        for($i=0; $i<15; $i++){
+          $chave = $chave . chr(rand(97, 122));
+        }
+        return $chave;
+    }
 
     /*
     public function normalizaPost($post){

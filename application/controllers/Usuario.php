@@ -15,7 +15,7 @@ class Usuario extends MY_Controller {
          $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
          
-         $scripts = Array('bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js', 'bandaUpload.js', 'bandaYoutube.js');
+         $scripts = Array('jquery.slimscroll.min.js', 'bandaConfiguracao.js', 'bandaContato.js', 'bandaEstilo.js', 'bandaCidade.js', 'bandaUpload.js', 'bandaYoutube.js');
          $this->SetScript($scripts);
     }
     
@@ -80,24 +80,29 @@ class Usuario extends MY_Controller {
         
         if ($this->form_validation->run())
         {
-            $dados = array('Login' => $post['Login']);
-            $ret = $this->usuario->atualizaUsuario($dados, $usuarioid);
-            if($ret == 1){
-                
-                   $this->atualizaUsuarioSessao('Login', $post['Login']);
-                
-                   unset($dados);
-                   unset($post['Login']);
-                   $ret = 0;
-                   
-                   $ret = $this->banda->atualizaBanda($post, $usuarioid);
-                   if($ret == 1){
-                       $this->postResult(TRUE, "<p>Atualização salva com sucesso!</p>");
-                   }else{
-                       $this->postResult(FALSE, "<p>Erro ao atualizar seus dados! Tente mais tarde! 1</p>");
-                   }
+            $res = $this->usuario->VerificaUsuario($post['Login']); /* VERIFICA SE O USUARIO JA EXISTE */
+            if(count($res) >= 1 && $res[0]['UsuarioId'] != $usuarioid){
+                $this->postResult(FALSE, "<p>Você está tentando utilizar uma conta de e-mail que já está cadastrada no nosso sistema!</p>");
             }else{
-                $this->postResult(FALSE, "<p>Erro ao atualizar seus dados! Tente mais tarde! 2</p>");
+                $dados = array('Login' => $post['Login']);
+                $ret = $this->usuario->atualizaUsuario($dados, $usuarioid);
+                if($ret == 1){
+
+                       $this->atualizaUsuarioSessao('Login', $post['Login']);
+
+                       unset($dados);
+                       unset($post['Login']);
+                       $ret = 0;
+
+                       $ret = $this->banda->atualizaBanda($post, $usuarioid);
+                       if($ret == 1){
+                           $this->postResult(TRUE, "<p class='sucesso-msg'>Atualização salva com sucesso!</p>");
+                       }else{
+                           $this->postResult(FALSE, "<p>Erro ao atualizar seus dados! Tente mais tarde!</p>");
+                       }
+                }else{
+                    $this->postResult(FALSE, "<p>Erro ao atualizar seus dados! Tente mais tarde!</p>");
+                }
             }
         }else{
              $this->postResult(FALSE, validation_errors());
@@ -202,9 +207,9 @@ class Usuario extends MY_Controller {
          }
          $ret = $this->banda->insereEstilos($dados);
          if(count($post['estilo']) == $ret){
-             $this->postResult(TRUE, "");
+             $this->postResult(TRUE, "<p class='sucesso-msg'>Atualização salva com sucesso!</p>");
          }else{
-             $this->postResult(FALSE, "Não foi possível atualizar esses dados, favor tentar mais tarde!");
+             $this->postResult(FALSE, "<p>Não foi possível atualizar esses dados, favor tentar mais tarde!</p>");
          }
      }
 

@@ -16,7 +16,7 @@ $(document).ready(function () {
         })
         .done(function(data) {
             var ret = $.parseJSON(data);
-            displayFormMsg("#trocasenhamsg", ret.msg);
+            displayFormMsg(ret.formValidate, "#trocasenhamsg", ret.msg);
         })
         .always(function() {
             btn.disabled = false;

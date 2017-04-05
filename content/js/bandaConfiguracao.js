@@ -11,6 +11,9 @@ $(document).ready(function () {
     $("#divsobre").addClass("floating-label-form-group-with-value");
     $("#divexperiencia").addClass("floating-label-form-group-with-value");
         
+    $("textarea[name='Sobre']").slimscroll({height: 'auto', width: '100%', size: '12px',  color: '#233140'});
+    $("textarea[name='Experiencia']").slimscroll({height: 'auto', width: '100%', size: '12px',  color: '#233140'});
+        
     var preco = $("input[name='Preco']").val();
     if(preco == 0){ $("input[name='Preco']").val('A combinar'); }
     
@@ -26,7 +29,7 @@ $(document).ready(function () {
                 if(ret.formValidate){
                     $('#nome-banda-conf').html($('input[name="Nome"]').val()); /* ATUALIZANDO O NOME DO TOPO */
                 }
-                displayFormMsg("#configuracaomsg", ret.msg);
+                displayFormMsg(ret.formValidate, "#configuracaomsg", ret.msg);
             }
         });
         

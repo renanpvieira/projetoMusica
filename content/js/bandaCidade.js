@@ -67,7 +67,7 @@ $(document).ready(function () {
                 $('#tabela-cidade').append(tr);
                 
             } else {
-                displayFormMsg("#adicionacidademsg", ret.msg);
+                displayFormMsg(ret.formValidate, "#adicionacidademsg", ret.msg);
             }
         })
         .always(function() {

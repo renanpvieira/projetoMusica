@@ -31,33 +31,45 @@ class Cadastro extends MY_Controller {
 
         if ($this->form_validation->run())
         {
-            $res = $this->usuario->VerificaUsuario($post['Login']);
+            $res = $this->usuario->VerificaUsuario($post['Login']); /* VERIFICA SE O USUARIO JA EXISTE */
             if(count($res) >= 1){
-                 /*
-                 * Enviar e-mail para troca de senha
-                 *                  
-                 */
-               $this->postResult(FALSE, "<p>Esse e-mail já esta cadastrado! Acabamos de enviar uma mensagem com as instruçõees para troca de senha!</p>");
+                                 
+                 $chave = $this->geraChave();
+                 date_default_timezone_set('America/Sao_Paulo');
+                 $dados = array('UsuarioId' => $res[0]['UsuarioId'], 'Chave' => $chave, 'DataHora' => time());
+                 $this->usuario->insereRecupera($dados);
+                
+                 $url = 'esquecisenha/novasenha/' . $chave;
+                 $msg = '<a href="' . site_url($url)  . '"> clique aqui </a>';
+                 
+                 $this->email->initialize($this->config->item('email'));
+                 $this->email->set_newline("\r\n");
+                 $this->email->from($this->config->item('emailfrom'), $this->config->item('emailfromnome'));
+                 $this->email->to($post['Login']);
+                 $this->email->subject($this->config->item('mailCadastroAssunto'));
+                 $this->email->message($msg);
+                 $ret = $this->email->send();
+               
+                 if($ret){
+                   $this->postResult(TRUE, "<p>Esse e-mail já esta cadastrado! Acabamos de enviar uma mensagem com as instruçõees para troca de senha!</p>");  
+                 }else{
+                   $this->postResult(FALSE, "<p>Esse e-mail já esta cadastrado! favor ir a sessão de 'Esqueci minha senha'!</p>");  
+                 }
+               
             }else{
                 $dados = array('Login' => $post['Login'], 'Senha' => 'n0v0c@dastro', 'Estatus' => 0);
-                //$res = $this->usuario->insereUsuario($dados);
-                $res = 1;
+                $res = $this->usuario->insereUsuario($dados);
                 unset($dados);
                 if($res >= 1){
                     $dados = array('Nome' => $post['Nome'], 'UsuarioId' => $res);
-                    //$ret = $this->banda->insereBandaBasico($dados);
-                    $ret = 1;
+                    $ret = $this->banda->insereBandaBasico($dados);
                     if($ret >= 1){
-                        
-                         $this->postResult(TRUE, "dd");
-                         die();
                         
                         $chave = $this->geraChave();
                         date_default_timezone_set('America/Sao_Paulo');
                         $dados = array('UsuarioId' => $res, 'Chave' => $chave, 'DataHora' => time());
                         $this->usuario->insereRecupera($dados);
-                        
-                        /*
+                                                
                         $url = 'esquecisenha/novasenha/' . $chave;
                         $msg = '<a href="' . site_url($url)  . '"> clique aqui </a>';
                         
@@ -67,9 +79,12 @@ class Cadastro extends MY_Controller {
                         $this->email->to($post['Login']);
                         $this->email->subject($this->config->item('mailCadastroAssunto'));
                         $this->email->message($msg);
-                        */
-                        
-                        $this->postResult(TRUE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruõees para finalizar seu cadasto.</p>");
+                        $ret = $this->email->send();
+                        if($ret){
+                          $this->postResult(TRUE, "<p>Em instantes enviaremos um e-mail para " . $post['Login'] . " com as instruções para finalizar seu cadasto.</p>");  
+                        }else{
+                          $this->postResult(FALSE, "<p>Esse e-mail já esta cadastrado! favor ir a sessão de 'Esqueci minha senha'!</p>");  
+                        }
                         
                     }else{
                         $this->postResult(FALSE, "<p>Houve um problema ao fazer seu cadastro! Tente mais tarde!</p>");   

@@ -66,7 +66,7 @@ $(document).ready(function () {
                 $('#tabela-fone').append(tr);
                 
             } else {
-                displayFormMsg("#adicionafonemsg", ret.msg);
+                displayFormMsg(ret.formValidate, "#adicionafonemsg", ret.msg);
             }
         })
         .always(function() {
@@ -142,7 +142,7 @@ $(document).ready(function () {
                 $('#tabela-mail').append(tr);
                 
             } else {
-                displayFormMsg("#adicionamailmsg", ret.msg);
+                displayFormMsg(ret.formValidate, "#adicionamailmsg", ret.msg);
             }
         })
         .always(function() {

@@ -94,7 +94,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group col-xs-12" id="configuracaomsg"></div>
+                                    <div class="form-group col-xs-12 form-msg" id="configuracaomsg"></div>
                                 </div>
                             </form>
                         </div> <!-- FIM DIV TAB CONFIGURACOES -->
@@ -111,7 +111,7 @@
                                          <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionaEmail">
                                     </div>
                                      <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionamailmsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="adicionamailmsg"></div>
                                     </div>
                                 </div>
                             </form>
@@ -150,7 +150,7 @@
                                             <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionafone">
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionafonemsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="adicionafonemsg"></div>
                                     </div>
                                 </div>
                             </form>
@@ -187,7 +187,7 @@
                                          <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionaVideo">
                                     </div>
                                      <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionavideomsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="adicionavideomsg"></div>
                                     </div>
                                 </div>
                             </form>
@@ -223,7 +223,7 @@
                                        <input type="submit"  class="btn btn-success btn-lg" value="Enviar" name="adicionaimg" />
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionauploadamsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="adicionauploadamsg"></div>
                                     </div>
                                 </div>
                             </form>
@@ -267,7 +267,7 @@
                                          <input type="button"  class="btn btn-success btn-lg" value="Salvar" name="adicionacidade">
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-xs-12" id="adicionacidademsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="adicionacidademsg"></div>
                                     </div>
                                 </div>
                             </form>
@@ -312,7 +312,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                        <div class="form-group col-xs-12" id="estilomsg"></div>
+                                        <div class="form-group col-xs-12 form-msg" id="estilomsg"></div>
                                 </div>
                             </form>
                         </div> <!-- FIM DIV TAB ESTILOS -->

@@ -65,7 +65,7 @@ $(document).ready(function () {
                 $('#tabela-video').append(tr);
                 
             } else {
-                displayFormMsg("#adicionavideomsg", ret.msg);
+                displayFormMsg(ret.formValidate, "#adicionavideomsg", ret.msg);
             }
         })
         .always(function() {

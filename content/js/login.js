@@ -10,7 +10,7 @@ $(document).ready(function () {
                 if (ret.formValidate) {
                     window.location = ret.url;
                 } else {
-                    displayFormMsg("#loginmsg", ret.msg);
+                    displayFormMsg(ret.formValidate,"#loginmsg", ret.msg);
                 }
             }
         });

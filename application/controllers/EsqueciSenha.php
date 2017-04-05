@@ -26,18 +26,13 @@ class EsqueciSenha extends MY_Controller {
         37 => array('s3izw' => 'img037.jpg'),        38 => array('945lb' => 'img038.jpg'),
         39 => array('468l3' => 'img039.jpg'),        40 => array('7f2m3' => 'img040.jpg')
     );
-    
-    private function geraChave(){
-        $chave = "";
-        for($i=0; $i<15; $i++){
-          $chave = $chave . chr(rand(97, 122));
-        }
-        return $chave;
-    }
+        
 
     public function __construct()
     {
          parent::__construct();
+         date_default_timezone_set('America/Sao_Paulo');
+         
          $this->load->helper('form');
          $this->load->library('session');
          $this->load->model('Usuario_model', 'usuario');
@@ -48,15 +43,23 @@ class EsqueciSenha extends MY_Controller {
          $scripts = Array('esquecisenha.js');
          $this->SetScript($scripts);
     }
-   
-    public function index()
-    {
+    
+    private function MypostResult($formValidate, $msg, $img, $chave){
+       echo json_encode(array('formValidate' => $formValidate, 'msg' => $msg, 'imagem' => $img, 'chave' => $chave));
+    }
+    
+    private function chaveImagem(){
         $rand = rand (1, count($this->capt));
         $chave = key($this->capt[$rand]);
         $imagedata = 'data:image/jpg;base64,' . base64_encode(file_get_contents(base_url('content/captcha/' . $this->capt[$rand][$chave])));
-                       
-        $this->SetDados('chave', $this->encryption->encrypt($chave));
-        $this->SetDados('image', $imagedata);
+        return array('chave' => $this->encryption->encrypt($chave), 'imagem' => $imagedata);
+    }
+   
+    public function index()
+    {
+        $ret = $this->chaveImagem();
+        $this->SetDados('chave', $ret['chave']);
+        $this->SetDados('image', $ret['imagem']);
         $this->displaySite('esquecisenha');
     }
     
@@ -94,7 +97,7 @@ class EsqueciSenha extends MY_Controller {
         $this->form_validation->set_rules('Imagem', 'Imagem', 'trim|required|min_length[3]|max_length[8]|alpha_numeric');
         if ($this->form_validation->run())
         {
-            if($post['Imagem'] == $this->encryption->decrypt($post['Chave']))
+            if($post['Imagem'] == strtolower($this->encryption->decrypt($post['Chave'])))
             {
                 $res = $this->usuario->VerificaUsuario($post['Login']);
                 if(count($res) == 1){
@@ -130,18 +133,22 @@ class EsqueciSenha extends MY_Controller {
                     //$ret = $this->email->send();
                     
                     if($ret){
-                      $this->postResult(TRUE, "<p>Foi enviado uma mensagem com instrucoes para o e-mail " . $post['Login'] . "</p>");  
+                      $this->postResult(TRUE, "<p class='sucesso-msg'>Foi enviado uma mensagem com instrucoes para o e-mail " . $post['Login'] . "</p>");  
                     }else{
-                      $this->postResult(FALSE, "<p>Ops! tvemos um problema ao enviar o e-mail, tente mais tarde!</p>"); 
+                      $ret = $this->chaveImagem();
+                      $this->MypostResult(FALSE, "<p>Ops! tvemos um problema ao enviar o e-mail, tente mais tarde!</p>", $ret['imagem'], $ret['chave']);
                     }
                 }else{
-                    $this->postResult(FALSE, "<p>Usuario nao encontrado!</p>"); // sem acento por causa do json
+                    $ret = $this->chaveImagem();
+                    $this->MypostResult(FALSE, "<p>Usuario nao encontrado!</p>", $ret['imagem'], $ret['chave']); 
                 }
             }else{
-               $this->postResult(FALSE, "<p>voce precisa digitar o texto que esta na imagem corretamente!</p>");
+               $ret = $this->chaveImagem();
+               $this->MypostResult(FALSE, "<p>voce precisa digitar o texto que esta na imagem corretamente!</p>", $ret['imagem'], $ret['chave']); 
             }
         }else{
-          $this->postResult(FALSE, validation_errors(), 'esquecisenha'); 
+          $ret = $this->chaveImagem();
+          $this->MypostResult(FALSE, validation_errors(), $ret['imagem'], $ret['chave']); 
         }
   }
 
