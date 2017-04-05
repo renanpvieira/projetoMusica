@@ -25,6 +25,17 @@ $(document).ready(function () {
                       $(this).remove();
                     }
                 });
+                
+                var qtd = $("#tabela-video > tbody  > tr").length;
+                if(qtd == 1){
+                   var tr = $('<tr>').attr("class", "nao-info");
+                   var td = $('<td>').attr("colspan", "2");
+                   td.text("Nenhum video informado!");       
+                   tr.append(td);
+                   $('#tabela-video').append(tr);
+                }
+                
+                
             }else{
                btn.disabled = false;
             }
@@ -47,6 +58,8 @@ $(document).ready(function () {
         .done(function(data) {
             var ret = $.parseJSON(data);
             if (ret.formValidate) {
+                
+                $('#tabela-video > tbody  > tr.nao-info').remove();
                 
                 var btn = $('<input>'); 
                 btn.attr("type", 'button');

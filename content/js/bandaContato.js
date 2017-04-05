@@ -19,12 +19,24 @@ $(document).ready(function () {
         .done(function(data) {
             var ret = parseInt(data);
             if(ret == 1){
+                
                 $('#tabela-fone > tbody  > tr').each(function() {
                     var trid = $(this).attr("data-fone");
                     if(id == trid){
                       $(this).remove();
                     }
                 });
+                
+                var qtd = $("#tabela-fone > tbody  > tr").length;
+                if(qtd == 1){
+                   var tr = $('<tr>').attr("class", "nao-info");
+                   var td = $('<td>').attr("colspan", "3");
+                   td.text("Nenhum telefone informado!");       
+                   tr.append(td);
+                   $('#tabela-fone').append(tr);
+                }
+                
+                
             }else{
                btn.disabled = false;
             }
@@ -35,7 +47,7 @@ $(document).ready(function () {
         var btn = this; 
         btn.disabled = true;// EVITA DOUBLE-CLICK
         var form = $("form[name='form-fone']").serializeArray();
-                
+        
         $.ajax({
             type: "POST",
             url: Site_Url("/usuario/adicionaFone"),
@@ -48,6 +60,8 @@ $(document).ready(function () {
             var ret = $.parseJSON(data);
             if (ret.formValidate) {
                 
+                $('#tabela-fone > tbody  > tr.nao-info').remove();
+                                
                 var btn = $('<input>'); 
                 btn.attr("type", 'button');
                 btn.attr("data-fone", ret.msg);
@@ -72,6 +86,7 @@ $(document).ready(function () {
         .always(function() {
             btn.disabled = false;
         });
+        
     });
     
     
@@ -96,12 +111,23 @@ $(document).ready(function () {
         .done(function(data) {
             var ret = parseInt(data);
             if(ret == 1){
+                
                 $('#tabela-mail > tbody  > tr').each(function() {
                     var trid = $(this).attr("data-mail");
                     if(id == trid){
                       $(this).remove();
                     }
                 });
+                
+                var qtd = $("#tabela-mail > tbody  > tr").length;
+                if(qtd == 1){
+                   var tr = $('<tr>').attr("class", "nao-info");
+                   var td = $('<td>').attr("colspan", "2");
+                   td.text("Nenhum e-mail informado!");       
+                   tr.append(td);
+                   $('#tabela-mail').append(tr);
+                }
+            
             }else{
                btn.disabled = false;
             }
@@ -112,7 +138,7 @@ $(document).ready(function () {
         var btn = this; 
         btn.disabled = true;// EVITA DOUBLE-CLICK
         var form = $("form[name='form-mail']").serializeArray();
-                
+      
         $.ajax({
             type: "POST",
             url: Site_Url("/usuario/adicionaEmail"),
@@ -124,6 +150,8 @@ $(document).ready(function () {
         .done(function(data) {
             var ret = $.parseJSON(data);
             if (ret.formValidate) {
+                
+                $('#tabela-mail > tbody  > tr.nao-info').remove();
                 
                 var btn = $('<input>'); 
                 btn.attr("type", 'button');
@@ -148,6 +176,7 @@ $(document).ready(function () {
         .always(function() {
             btn.disabled = false;
         });
+   
     });
     
     

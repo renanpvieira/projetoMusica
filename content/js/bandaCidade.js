@@ -48,6 +48,8 @@ $(document).ready(function () {
             var ret = $.parseJSON(data);
             if (ret.formValidate) {
                 
+                $('#tabela-cidade > tbody  > tr.nao-info').remove();
+                
                 var btn = $('<input>'); 
                 btn.attr("type", 'button');
                 btn.attr("data-cidade", ret.msg);
@@ -100,6 +102,16 @@ $(document).ready(function () {
                       $(this).remove();
                     }
                 });
+                
+                var qtd = $("#tabela-cidade > tbody  > tr").length;
+                if(qtd == 1){
+                   var tr = $('<tr>').attr("class", "nao-info");
+                   var td = $('<td>').attr("colspan", "3");
+                   td.text("Nenhum cidade informado!");       
+                   tr.append(td);
+                   $('#tabela-cidade').append(tr);
+                }
+                
             }else{
                btn.disabled = false;
             }

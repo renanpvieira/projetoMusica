@@ -129,7 +129,7 @@
                                           echo '<tr data-mail="' . $mail['BandaEmailId'] . '" ><td>' . $mail['Email'] . '</td><td class="grid-botoes"><input type="button"  data-mail="' . $mail['BandaEmailId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletemail"></td></tr>';
                                         }
                                     }else{
-                                        echo '<tr><td colspan="2">Nenhum e-mail informado!</td></tr>';
+                                        echo '<tr class="nao-info"><td colspan="2">Nenhum e-mail informado!</td></tr>';
                                     }
                                 ?>
                                 </table>
@@ -168,7 +168,7 @@
                                           echo '<tr data-fone="' . $tel['BandaTelefoneId'] . '" ><td>' . $tel['DDD'] . '</td><td>' . $tel['Numero'] . '</td><td class="grid-botoes"><input type="button" data-fone="' . $tel['BandaTelefoneId'] . '" class="btn btn-success btn-xs btn-danger" value="Deletar" name="deletefone"></td></tr>';
                                         }
                                     }else{
-                                        echo '<tr><td colspan="3">Nenhum telefone informado!</td></tr>';
+                                        echo '<tr class="nao-info"><td colspan="3">Nenhum telefone informado!</td></tr>';
                                     }
                                 ?>
                                 </table>
@@ -204,7 +204,7 @@
                                           echo '<tr data-video="' . $video['BandaYoutubeId'] . '" ><td>' . $video['URL'] . '</td><td class="grid-botoes"><input type="button"  data-video="' . $video['BandaYoutubeId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletevideo"></td></tr>';
                                         }
                                     }else{
-                                        echo '<tr><td colspan="2">Nenhum vídeo informado!</td></tr>';
+                                        echo '<tr class="nao-info"><td colspan="2">Nenhum vídeo informado!</td></tr>';
                                     }
                                 ?>
                                 </table>
@@ -285,7 +285,7 @@
                                           echo '<tr data-cidade="' . $cit['BandaCidadeId'] . '" ><td>' . $cit['UFDescricao'] . '</td><td>' . $cit['CidadeDescricao'] . '</td><td class="grid-botoes"><input type="button" data-cidade="' . $cit['BandaCidadeId'] . '" class="btn btn-success btn-xs" value="Deletar" name="deletecidade"></td></tr>';
                                         }
                                     }else{
-                                        echo '<tr><td colspan="3">Nenhuma cidade informado!</td></tr>';
+                                        echo '<tr class="nao-info"><td colspan="3">Nenhuma cidade informado!</td></tr>';
                                     }
                                 ?>
                                 </table>
