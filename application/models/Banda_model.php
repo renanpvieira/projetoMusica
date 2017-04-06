@@ -15,13 +15,15 @@ class Banda_model extends CI_Model {
     
     
      public function lstBandas($offset = 0){
+         $limit = 3;
+         $start = $limit * $offset;
          $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, IFNULL(banda_foto.Nome,"bandaBase.jpg") as foto,  
                    (select group_concat(descricao SEPARATOR " - ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
                    (select group_concat(descricao SEPARATOR " - ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
 	           from banda B
-                   left join banda_foto on banda_foto.FotoId = B.FotoCapaId';
-                   
-
+                   left join banda_foto on banda_foto.FotoId = B.FotoCapaId
+                   LIMIT ' . $limit . ' OFFSET ' . $start;
+         
          return $this->db->query($query)->result_array();
      }
      

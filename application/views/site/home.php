@@ -22,7 +22,7 @@
             <h5>Faça sua pesquisa</h5> 
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <form name="login" id="contactForm" novalidate="">
+            <form name="form-busca" id="contactForm" novalidate="">
                 <div class="row control-group">
                     <div class="form-group col-xs-12 floating-label-form-group controls noborder">
                         <!--
@@ -32,9 +32,9 @@
                         -->
                         <div class="input-group input-buscar">
                           <label for="name">Digite sua busca</label>
-                          <input type="text" class="form-control form-group col-xs-10 controls"  placeholder="Ex: Samba Pagode Niterói">
+                          <input type="text" class="form-control form-group col-xs-10 controls" name="input-busca"  placeholder="Ex: Samba Pagode Niterói">
                           <div class="input-group-addon verde">
-                             <input type="button"  class="btn btn-success btn-lg" value="Pesquisar" name="Enviar">
+                              <input type="submit"  class="btn btn-success btn-lg" value="Pesquisar" name="Enviar">
                           </div>
                         </div>
                         
@@ -81,8 +81,9 @@
                     <hr class="star-primary">
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="listabandas">
                 <?php 
+                  /*
                    foreach($bandas as $v){
                      echo   '<div class="col-sm-4 portfolio-item">
                                 <a href="' . site_url('banda/index/' . $v['BandaId']) . '" class="portfolio-link" data-toggle="modal">
@@ -96,6 +97,8 @@
                                 </a>
                             </div>';
                    }
+                   * 
+                   */
                 ?>
             </div>
         </div>

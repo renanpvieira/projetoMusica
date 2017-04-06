@@ -92,6 +92,9 @@
         div.form-msg > p {font-size: 16px !important; }
         div.form-msg > p.sucesso-msg {color: #31708f !important; }
         
+        div.fim-busca {text-align: center; background-color: #18BC9C; color: #fff; padding: 6px; padding-top: 14px;}
+        
+        
     </style>
 
 </head>

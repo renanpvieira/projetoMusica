@@ -18,16 +18,30 @@ class Home extends MY_Controller {
 
     public function index()
     {
-        $this->SetDados('ufs', $this->uf->lstUFs());
-        $this->SetDados('estilos', $this->estilo->lstEstilos());
-        $this->SetDados('bandas', $this->banda->lstBandas());
+        //$this->SetDados('ufs', $this->uf->lstUFs());
+        //$this->SetDados('estilos', $this->estilo->lstEstilos());
+        //$this->SetDados('bandas', $this->banda->lstBandas());
         $this->displaySite('home');
     }
-
-    public function getJsonCidades()
-    {
-         $c = $this->input->get();
-         echo  json_encode($c);
+    
+    
+    public function bandas(){
+        $this->somentePost();
+        $post = $this->input->post();
+        
+        if(!array_key_exists("Pagina", $post)){ /* FORÇA A TER Pagina */
+            echo json_encode(NULL);
+            die();
+        }
+       
+        echo json_encode($this->banda->lstBandas($post['Pagina']));
     }
+    
+    public function cidades() {
+        $post = $this->input->post();
+        echo json_encode($this->uf->lstUFs());
+    }
+
+   
 }
 

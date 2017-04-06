@@ -73,6 +73,7 @@
          }
                   
          function Site_Url(url){  return '<?php echo site_url(); ?>' + url; }
+         function Base_Url(url){  return '<?php echo base_url(); ?>' + url; }
     </script>
     
     

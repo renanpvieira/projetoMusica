@@ -33,6 +33,13 @@ class MY_Controller extends CI_Controller {
      public function estaLogado(){
          return $this->session->has_userdata('musica_proj');
      }
+     
+     
+     public function somentePost(){
+         if($this->input->method(TRUE) != "POST"){
+            redirect("erro");    
+         }
+     }
     
     public function getUsuarioId(){
        $url = site_url('login');
