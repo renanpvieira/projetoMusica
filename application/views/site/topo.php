@@ -94,6 +94,10 @@
         
         div.fim-busca {text-align: center; background-color: #18BC9C; color: #fff; padding: 6px; padding-top: 14px;}
         
+        /* div.combo-bv > select {width: 70% !important;} */
+        
+        
+        
         
     </style>
 

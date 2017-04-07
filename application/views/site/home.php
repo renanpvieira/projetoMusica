@@ -46,7 +46,7 @@
                     -->
                 </div>
             </form>
-            <a href="#">Busca avançada</a>
+            <a href="<?php echo site_url('buscaavancada'); ?>">Busca avançada</a>
         </div>
     </div>
 </div>
