@@ -70,7 +70,7 @@ $(document).ready(function () {
                 var divCaption = $('<div>').attr("class", "caption");
                 var divCaptionCont = $('<div>').attr("class", "caption-content");
                 
-                var href = 'banda/index/' + ret[i].BandaId;
+                var href = '/banda/index/' + ret[i].BandaId;
                 var link = $('<a>');
                 link.attr("href", Site_Url(href));
                 link.attr("class", "portfolio-link");

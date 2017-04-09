@@ -41,6 +41,55 @@ class Home extends MY_Controller {
         $post = $this->input->post();
         echo json_encode($this->uf->lstUFs());
     }
+    
+    
+    function arquivos(){
+        /*/*
+        $path = 'C:\wamp64\www\projetoMusica\content\imgs\bandas';
+        $files = array_values(array_filter(scandir($path), function($file) {   return !is_dir($file); }));
+        */
+        
+        
+        $bandas = $this->banda->todas();
+        $estilos = $this->estilo->lstEstilos();
+        
+
+        foreach($bandas as $banda){
+            
+            
+            /*echo  $banda['Nome'] . '<br />';
+            $q = rand(2, 4);
+            $d = array();
+            for($i =0; $i<=$q; $i++){
+                $r = rand(0, (count($estilos) - 1));
+                echo $estilos[$r]['EstiloId'] . '<br />';
+                
+               
+                $d[$i] = array('BandaId' => $banda['BandaId'], 'EstiloId' => $estilos[$r]['EstiloId']);
+                //$this->banda->insereEstilos($d);
+                 //unset($d);
+            }
+            $this->banda->insereEstilos($d);
+            var_dump($d);
+            */
+            
+            /*
+            $r = $this->banda->getBandaFotos($banda['BandaId']);
+            $q = rand(0, (count($r) - 1));
+            
+            $this->banda->atualizaCapa($r[$q]['FotoId'], $banda['BandaId']);
+            
+            var_dump($r);
+            var_dump($r[$q]['FotoId']);
+             * 
+             */
+            
+            
+        }
+         
+
+        
+    }
 
    
 }

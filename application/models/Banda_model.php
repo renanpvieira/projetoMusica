@@ -8,6 +8,12 @@ class Banda_model extends CI_Model {
            parent::__construct();
     }
     
+    
+    public function todas(){
+        return $this->db->query('select * from banda')->result_array();
+        
+    }
+    
     public function insereBandaBasico($dados){
        $this->db->insert('banda', $dados);
        return (($this->db->affected_rows() > 0) ? $this->db->insert_id() : 0);
@@ -15,7 +21,7 @@ class Banda_model extends CI_Model {
     
     
      public function lstBandas($offset = 0){
-         $limit = 3;
+         $limit = 6;
          $start = $limit * $offset;
          $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, IFNULL(banda_foto.Nome,"bandaBase.jpg") as foto,  
                    (select group_concat(descricao SEPARATOR " - ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
