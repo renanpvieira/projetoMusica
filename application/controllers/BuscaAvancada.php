@@ -34,7 +34,56 @@ class BuscaAvancada extends MY_Controller {
         $ufs = json_decode($post['ufs']);  
         $cidades = json_decode($post['cidades']);
         $estilos = json_decode($post['estilos']);
-        echo json_encode($ufs) . ' - '  . json_encode($cidades) . ' - ' . json_encode($estilos);
+        
+        $ufs[count($ufs)] = 0; //hack para o like
+        $cidades[count($cidades)] = 0;
+        $estilos[count($estilos)] = 0;
+                
+        $uf_query = (count($ufs) > 1? 'cidade.ufid in (' . implode(',', $ufs) . ')' : '');
+        $ci_query = (count($cidades) > 1? 'banda_cidade.cidadeid in (' . implode(',', $cidades) . ')' : '');
+        $es_query = (count($estilos) > 1? 'banda_estilo.estiloid in (' . implode(',', $estilos) . ')' : '');
+        
+        $query = $es_query . ' and (' . $uf_query . ' or ' . $ci_query . ' )';
+               
+        if(count($estilos) == 1){
+          $query = str_replace(' and ', ' ', $query);    
+        }
+        
+        if(count($cidades) == 1 or count($ufs) == 1){
+          $query = str_replace('or', '', $query);    
+        }
+        
+        //$query = str_replace('NADA', '', $query);
+        
+        
+        
+        /*
+        $query = (count($estilos) > 1 ? $es_query : '');
+        
+        if(count($ufs) > 1 || count($cidades) > 1){
+           $es_query = ' and ' . $es_query;     
+        }else{
+           $es_query = '';
+        }
+        
+        if(count($ufs) == 1 || count($cidades) > 1){
+           $query = $ci_query . $es_query;     
+        }
+        
+        if(count($ufs) > 1 || count($cidades) == 1){
+           $query = $uf_query . $es_query;     
+        }
+        
+        if(count($ufs) > 1 && count($cidades) > 1){
+           $query = '(' . $uf_query . ' or ' . $ci_query . ') ' . $es_query;     
+        }
+        */
+        echo $query;
+        
+        
+        
+        
+        //echo json_encode($ufs) . ' - '  . json_encode($cidades) . ' - ' . json_encode($estilos);
     }
     
     

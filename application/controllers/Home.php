@@ -9,6 +9,7 @@ class Home extends MY_Controller {
          $this->load->helper('form');
 
          $this->load->model('UF_model', 'uf');
+         $this->load->model('Cidade_model', 'cidade');
          $this->load->model('Estilo_model', 'estilo');
          $this->load->model('Banda_model', 'banda');
                   
@@ -48,13 +49,33 @@ class Home extends MY_Controller {
         $path = 'C:\wamp64\www\projetoMusica\content\imgs\bandas';
         $files = array_values(array_filter(scandir($path), function($file) {   return !is_dir($file); }));
         */
+        // 3 e 23
         
-        
-        $bandas = $this->banda->todas();
-        $estilos = $this->estilo->lstEstilos();
+        //$bandas = $this->banda->todas();
+        //$amapa = $this->cidade->lstCidades(3);
+        //$roraima = $this->cidade->lstCidades(23);
         
 
-        foreach($bandas as $banda){
+        //foreach($bandas as $banda){
+            
+            //$qa = rand(1, 3);
+            //$qr = rand(1, 3);
+          
+            /*
+            for($i =0; $i<=$qa; $i++){
+                 $a = rand(0, (count($amapa) - 1));
+                 $dados = array('BandaId' => $banda['BandaId'], 'CidadeId' => $amapa[$a]['CidadeId']);
+                 $this->banda->insereCidade($dados);
+            }
+             * 
+             */
+             
+        /*
+            for($i =0; $i<=$qr; $i++){
+                $a = rand(0, (count($roraima) - 1));
+                $dados = array('BandaId' => $banda['BandaId'], 'CidadeId' => $roraima[$a]['CidadeId']);
+                $this->banda->insereCidade($dados); 
+            }*/
             
             
             /*echo  $banda['Nome'] . '<br />';
@@ -85,7 +106,7 @@ class Home extends MY_Controller {
              */
             
             
-        }
+       // }
          
 
         
