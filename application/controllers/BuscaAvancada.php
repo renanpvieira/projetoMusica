@@ -30,6 +30,8 @@ class BuscaAvancada extends MY_Controller {
     
     
     public function testetando() {
+        sleep(4);
+        
         $post = $this->input->post();
         $ufs = json_decode($post['ufs']);  
         $cidades = json_decode($post['cidades']);

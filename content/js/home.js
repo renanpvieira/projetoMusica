@@ -93,7 +93,8 @@ $(document).ready(function () {
                 link.append(img);
                 
                 divPrincipal.append(link);
-                $("#listabandas").append(divPrincipal);
+                $("#listabandas").append(divPrincipal).delay( 800 ).fadeIn( 400 );
+                
                 
             }
             

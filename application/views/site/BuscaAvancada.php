@@ -48,6 +48,9 @@
                         </div><!-- /.row -->
                     </form>
                     <div class="row filtros" id="filtros"></div>
+                    <div class="row filtros" id="bandas">
+                        
+                    </div>
                     
                 </div>
             </div>

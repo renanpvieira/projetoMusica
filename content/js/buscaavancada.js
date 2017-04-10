@@ -53,12 +53,19 @@ $(document).ready(function () {
                 type: "POST",
                 url: Site_Url("/buscaavancada/testetando"),
                 data: GeraSecurityForm(form),
+                data: GeraSecurityForm(form),
+                beforeSend: function () {
+                    $('#bandas').empty();
+                    $('#bandas').append( $('<img>').attr('src', Base_Url('content/imgs/site/load.gif')) );
+                },
                 success: function (data) {
-                  
+                   //btn.disabled = true;
+                   console.log('sucesso');
                 }
             })
             .done(function(data) {
-              console.log(data);
+                $('#bandas').empty();
+                console.log(data);
             });
             
             
