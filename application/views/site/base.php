@@ -1,5 +1,5 @@
 <!-- Footer -->
-    <footer class="text-center">
+    <footer class="text-center"> <!-- class="footer navbar-fixed-bottom" -->
         <div class="footer-above">
             <div class="container">
                 <div class="row">

@@ -101,5 +101,6 @@
                    */
                 ?>
             </div>
+            <span id="load" class="col-lg-12 text-center"></span> 
         </div>
     </section>

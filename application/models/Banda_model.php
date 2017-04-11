@@ -20,16 +20,22 @@ class Banda_model extends CI_Model {
     }
     
     
-     public function lstBandas($offset = 0){
+     public function lstBandas($offset = 0, $where = NULL){
          $limit = 6;
          $start = $limit * $offset;
-         $query = 'select B.BandaId, B.Nome, NumIntegrantes, Estrelas, IFNULL(banda_foto.Nome,"bandaBase.jpg") as foto,  
-                   (select group_concat(descricao SEPARATOR " - ") from cidade inner join banda_cidade on banda_cidade.CidadeId = cidade.cidadeid where banda_cidade.BandaId = B.BandaId ) as Cidades, 
-                   (select group_concat(descricao SEPARATOR " - ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
-	           from banda B
-                   left join banda_foto on banda_foto.FotoId = B.FotoCapaId
-                   LIMIT ' . $limit . ' OFFSET ' . $start;
+         $where = (strlen($where) > 5 ? ' and ( ' . $where . ' ) ' : '');
          
+         $query = 'SELECT B.BandaId, B.Nome, IFNULL(banda_foto.Nome,"bandaBase.jpg") as foto,  
+                   (select group_concat(descricao SEPARATOR " - ") from estilo inner join banda_estilo on banda_estilo.EstiloId = estilo.EstiloId where banda_estilo.BandaId = B.BandaId ) as Estilos
+                   FROM banda B
+                   LEFT JOIN banda_foto on banda_foto.FotoId = B.FotoCapaId
+                   LEFT JOIN banda_cidade on banda_cidade.BandaId = B.BandaId
+                   LEFT JOIN banda_estilo on banda_estilo.BandaId = B.BandaId
+                   INNER JOIN Cidade on banda_cidade.CidadeId =  cidade.CidadeId    
+                   INNER JOIN usuario on B.usuarioid = usuario.usuarioid
+                   WHERE usuario.estatus <> 2  ' . $where .
+                   'GROUP BY B.BandaId, B.Nome, B.Nome, banda_foto.Nome
+                   ORDER BY B.BandaId desc LIMIT ' . $limit . ' OFFSET ' . $start;
          return $this->db->query($query)->result_array();
      }
      

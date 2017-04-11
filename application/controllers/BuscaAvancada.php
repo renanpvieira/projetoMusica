@@ -9,8 +9,9 @@ class BuscaAvancada extends MY_Controller {
          $this->load->model('UF_model', 'uf');
          $this->load->model('Estilo_model', 'estilo');
          $this->load->model('Cidade_model', 'cidade');
+         $this->load->model('Banda_model', 'banda');
          
-         $scripts = Array('buscaavancada.js');
+         $scripts = Array('fncBusca.js', 'fncCarregaCidade.js', 'buscaavancada.js');
          $this->SetScript($scripts);
         
     }
@@ -28,11 +29,33 @@ class BuscaAvancada extends MY_Controller {
         echo json_encode($this->cidade->lstCidades($post['ufs']));
     }
     
+    /*
+    public function bandas(){
+        sleep(5);
+        
+        $this->somentePost();
+        $post = $this->input->post();
+        
+        if(!array_key_exists("pagina", $post)){ 
+            echo json_encode(NULL);
+            die();
+        }
+       
+        echo json_encode($this->banda->lstBandas($post['pagina']));
+    }
+    */
     
-    public function testetando() {
-        sleep(4);
+    public function bandas() {
+        
+        
         
         $post = $this->input->post();
+        
+        if(!array_key_exists("pagina", $post)){ 
+            echo json_encode(NULL);
+            die();
+        }
+                
         $ufs = json_decode($post['ufs']);  
         $cidades = json_decode($post['cidades']);
         $estilos = json_decode($post['estilos']);
@@ -41,51 +64,35 @@ class BuscaAvancada extends MY_Controller {
         $cidades[count($cidades)] = 0;
         $estilos[count($estilos)] = 0;
                 
-        $uf_query = (count($ufs) > 1? 'cidade.ufid in (' . implode(',', $ufs) . ')' : '');
-        $ci_query = (count($cidades) > 1? 'banda_cidade.cidadeid in (' . implode(',', $cidades) . ')' : '');
-        $es_query = (count($estilos) > 1? 'banda_estilo.estiloid in (' . implode(',', $estilos) . ')' : '');
+        $uf_query = (count($ufs) > 1? 'cidade.ufid in [' . implode(',', $ufs) . '] ' : '');
+        $ci_query = (count($cidades) > 1? 'banda_cidade.cidadeid in [' . implode(',', $cidades) . '] ' : '');
+        $es_query = (count($estilos) > 1? 'banda_estilo.estiloid in [' . implode(',', $estilos) . '] ' : '');
         
-        $query = $es_query . ' and (' . $uf_query . ' or ' . $ci_query . ' )';
+        $query = $es_query . ' and (' . $uf_query . ' or ' . $ci_query . ' ) ';
                
         if(count($estilos) == 1){
           $query = str_replace(' and ', ' ', $query);    
+          $query = str_replace('(', '', $query);
+          $query = str_replace(')', '', $query);
         }
+        
+        
         
         if(count($cidades) == 1 or count($ufs) == 1){
           $query = str_replace('or', '', $query);    
         }
         
-        //$query = str_replace('NADA', '', $query);
-        
-        
-        
-        /*
-        $query = (count($estilos) > 1 ? $es_query : '');
-        
-        if(count($ufs) > 1 || count($cidades) > 1){
-           $es_query = ' and ' . $es_query;     
-        }else{
-           $es_query = '';
+        if(count($cidades) == 1 and count($ufs) == 1 and count($estilos) == 1){
+          $query = NULL;    
         }
         
-        if(count($ufs) == 1 || count($cidades) > 1){
-           $query = $ci_query . $es_query;     
-        }
+        $query = str_replace('[', '(', $query);
+        $query = str_replace(']', ')', $query);
+              
+                
+        echo json_encode($this->banda->lstBandas($post['pagina'], $query));
+        //echo $this->banda->lstBandas($post['pagina'], $query);
         
-        if(count($ufs) > 1 || count($cidades) == 1){
-           $query = $uf_query . $es_query;     
-        }
-        
-        if(count($ufs) > 1 && count($cidades) > 1){
-           $query = '(' . $uf_query . ' or ' . $ci_query . ') ' . $es_query;     
-        }
-        */
-        echo $query;
-        
-        
-        
-        
-        //echo json_encode($ufs) . ' - '  . json_encode($cidades) . ' - ' . json_encode($estilos);
     }
     
     

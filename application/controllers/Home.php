@@ -13,7 +13,7 @@ class Home extends MY_Controller {
          $this->load->model('Estilo_model', 'estilo');
          $this->load->model('Banda_model', 'banda');
                   
-         $scripts = Array('home.js');
+         $scripts = Array('fncBusca.js', 'home.js');
          $this->SetScript($scripts);
     }
 

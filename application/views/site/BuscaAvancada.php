@@ -1,7 +1,7 @@
 <br />
 <br />
 <!-- Contact Section -->
-    <section id="contact">
+    <section id="portfolio">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -48,9 +48,11 @@
                         </div><!-- /.row -->
                     </form>
                     <div class="row filtros" id="filtros"></div>
-                    <div class="row filtros" id="bandas">
-                        
-                    </div>
+                    <br />
+                    <br />
+                    <div class="row" id="listabandas"></div>
+                    <span id="load" class="col-lg-12 text-center"></span> 
+                    
                     
                 </div>
             </div>
