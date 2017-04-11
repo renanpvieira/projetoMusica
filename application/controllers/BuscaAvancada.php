@@ -29,22 +29,7 @@ class BuscaAvancada extends MY_Controller {
         echo json_encode($this->cidade->lstCidades($post['ufs']));
     }
     
-    /*
-    public function bandas(){
-        sleep(5);
-        
-        $this->somentePost();
-        $post = $this->input->post();
-        
-        if(!array_key_exists("pagina", $post)){ 
-            echo json_encode(NULL);
-            die();
-        }
-       
-        echo json_encode($this->banda->lstBandas($post['pagina']));
-    }
-    */
-    
+
     public function bandas() {
         
         

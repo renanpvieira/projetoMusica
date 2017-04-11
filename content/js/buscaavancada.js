@@ -26,16 +26,17 @@ $(document).ready(function () {
         return h4.append(span.append(i));
     }
     
-    /* O DELETE AINDA ESTA REMOVENDO ERRADO */
+    
         
     $(document).on("click", "#filtros > h4", function(){
         var tipo = $(this).attr("data-type");
-        var val = $(this).attr("data-val");
+        var val = parseInt($(this).attr("data-val"));
         switch(tipo) {
             case 'uf': ufs.splice(ufs.indexOf(val), 1); break;
             case 'cidade': cidades.splice(cidades.indexOf(val), 1); break;
             case 'estilo': estilos.splice(estilos.indexOf(val), 1); break;
         }
+        
         $('#listabandas').empty(); /* Não posso fazer isso na função por causa da paginacao */
         pagina = 0;
         carregaBandas(GeraDados(), url);

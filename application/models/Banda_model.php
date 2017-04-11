@@ -37,6 +37,7 @@ class Banda_model extends CI_Model {
                    'GROUP BY B.BandaId, B.Nome, B.Nome, banda_foto.Nome
                    ORDER BY B.BandaId desc LIMIT ' . $limit . ' OFFSET ' . $start;
          return $this->db->query($query)->result_array();
+         //return $query;
      }
      
      public function getBandaUsuario($usuarioid){
