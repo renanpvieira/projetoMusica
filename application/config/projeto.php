@@ -12,4 +12,6 @@ $config['emailfromnome'] = 'Nome';
 $config['mailCadastroAssunto'] = 'Nome';
 $config['emailfromnome'] = 'Nome';
 
+$config['background'] = 'content/css/imgs/0' . rand(1, 5) . '.jpg';
+
 

@@ -49,7 +49,7 @@
         header { 
            /* background-image: url("../..//..//content/css/imgs/01.jpg") no-repeat !important; */
            
-           background-image: url("<?php echo base_url('content/css/imgs/02.jpg'); ?>") !important;
+           background-image: url("<?php echo base_url($this->config->item('background')); ?>") !important;
            background-position: center; 
            
         }
@@ -97,7 +97,7 @@
         /* div.combo-bv > select {width: 70% !important;} */
         .label-especialgreen {background-color: #18BC9C;}
         div.filtros {text-align: center; margin-top: 15px;}
-        div.filtros > h4 { display: inline; margin: 5px;  cursor:pointer;}
+        div.filtros > h4 { display: inline-table;  margin: 5px;  cursor:pointer;}
         
         
          
